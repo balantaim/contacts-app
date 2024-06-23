@@ -1,25 +1,11 @@
 package com.contacts;
 
-import io.micronaut.context.annotation.Value;
-import io.micronaut.http.HttpRequest;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.function.Executable;
-
-import static io.micronaut.http.HttpStatus.OK;
-import static io.micronaut.http.HttpStatus.UNAUTHORIZED;
-import static io.micronaut.http.MediaType.TEXT_PLAIN;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-
 import jakarta.inject.Inject;
 
 import java.util.regex.Matcher;

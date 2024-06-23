@@ -1,0 +1,33 @@
+micronaut:
+  security:
+    enabled: true
+    basic-auth:
+      enabled: true
+    authentication: session
+    session:
+      enabled: true
+    redirect:
+      logout: /status/info
+      login-success: /login/authSuccess
+      login-failure: /login/authFailed
+
+    endpoints:
+      login:
+        enabled: true
+        path: /login
+      logout:
+        enabled: true
+        path: /logout
+
+    intercept-url-map:
+      - pattern: /swagger-ui/**
+        httpMethod: GET
+        access:
+          - isAnonymous()
+      - pattern: /swagger/**
+        httpMethod: GET
+        access:
+          - isAnonymous()
+      - pattern: /v1/**
+        access:
+          - isAuthenticated()

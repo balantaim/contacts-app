@@ -5,7 +5,7 @@ plugins {
     id("io.micronaut.aot") version "4.4.0"
 }
 
-version = "0.1"
+version = "1.0"
 group = "com.contacts"
 
 repositories {
@@ -13,33 +13,54 @@ repositories {
 }
 
 dependencies {
+    //Lombok
     annotationProcessor("org.projectlombok:lombok")
-    annotationProcessor("io.micronaut:micronaut-http-validation")
-    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
-    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    compileOnly("org.projectlombok:lombok")
+
+    //For JSON request/response
     implementation("io.micronaut.serde:micronaut-serde-jackson")
-    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
 
+    //Micronaut basic + hikari server + postgresql
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.data:micronaut-data-jdbc")
+    implementation("io.micronaut:micronaut-runtime")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("org.postgresql:postgresql")
 
+    //Reactive client
+    implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation("io.micronaut.reactor:micronaut-reactor-http-client")
+
+    //Hibernate
     implementation("io.micronaut.sql:micronaut-hibernate-jpa")
     implementation("io.micronaut.data:micronaut-data-tx-hibernate")
 
-    implementation("io.micronaut.sql:micronaut-hibernate-jpa")
+    //Security
+    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut.security:micronaut-security")
+    implementation("io.micronaut.security:micronaut-security-session")
+
+    //For yml configurations
+    runtimeOnly("org.yaml:snakeyaml")
+
+    //Micronaut Http Client
+    compileOnly("io.micronaut:micronaut-http-client")
+    testImplementation("io.micronaut:micronaut-http-client")
+
+    //Swagger - Open API
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
 
     //Validations
 //    annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
 //    implementation("io.micronaut.validation:micronaut-validation")
 
-    compileOnly("io.micronaut:micronaut-http-client")
-    compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
-    compileOnly("org.projectlombok:lombok")
-    runtimeOnly("ch.qos.logback:logback-classic")
-    runtimeOnly("org.postgresql:postgresql")
-    testImplementation("io.micronaut:micronaut-http-client")
-
+    //Graphql
 //    implementation("io.micronaut.graphql:micronaut-graphql")
+
 }
 
 

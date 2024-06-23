@@ -5,11 +5,14 @@ import com.contacts.dto.ContactRepository;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -19,22 +22,21 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Secured(SecurityRule.IS_AUTHENTICATED)
+@Tag(name = "Contact Controller CRUD")
 @Controller("/")
 public class ContactController {
 
     //Entry point for Swagger: http://localhost:5000/swagger-ui
 
-    private final ContactRepository repository;
-
-    //Constructor
-    public ContactController(ContactRepository repository){
-        this.repository = repository;
-    }
+    //Use jakarta @Inject for dependency injection (field should not be final)
+    @Inject
+    private ContactRepository repository;
 
     //Get all Contacts and filter it by 'filter' if is given
     @Operation(summary = "Get all contacts", description = "Get all Contacts and filter it by 'filter' if is given")
     @ApiResponse(responseCode = "200", description = "OK")
-    @Tag(name = "Get all contacts")
+    @ApiResponse(responseCode = "401", description = "Unauthorized")
 
     @Get(uri="/")
     public List<Contact> getAllContacts(@Nullable @QueryValue final String filter) {
@@ -69,9 +71,8 @@ public class ContactController {
     //Find contact by ID
     @Operation(summary = "Get contact by ID", description = "Provide contact data")
     @ApiResponse(responseCode = "200", description = "OK")
-    @ApiResponse(responseCode = "400", description = "Invalid Contact ID")
+    @ApiResponse(responseCode = "401", description = "Unauthorized")
     @ApiResponse(responseCode = "404", description = "Contact not found")
-    @Tag(name = "Get contact by ID")
 
     @Get("/find/{id}")
     public HttpResponse<Contact> findById(@PathVariable final Long id) {
@@ -82,9 +83,9 @@ public class ContactController {
 
     //Add a new Contact
     @Operation(summary = "Add a new Contact", description = "Create new contact")
-    @ApiResponse(responseCode = "201", description = "New contact is created")
+    @ApiResponse(responseCode = "201", description = "New contact created")
     @ApiResponse(responseCode = "400", description = "Invalid Contact's data")
-    @Tag(name = "Add a new Contact")
+    @ApiResponse(responseCode = "401", description = "Unauthorized")
 
     @Post(uri="/add")
     public HttpResponse<Contact> addContact(@Body Contact contact) {
@@ -108,8 +109,8 @@ public class ContactController {
     @ApiResponse(content = @Content(mediaType = "text/plain", schema = @Schema(type="string")))
     @ApiResponse(responseCode = "200", description = "Update OK")
     @ApiResponse(responseCode = "400", description = "Invalid contact's data")
+    @ApiResponse(responseCode = "401", description = "Unauthorized")
     @ApiResponse(responseCode = "404", description = "Contact not found")
-    @Tag(name = "Update contact")
 
     @Put(uri="/update", produces="text/plain")
     public HttpResponse updateContact(@Body final Contact contact){
@@ -127,9 +128,7 @@ public class ContactController {
             }else{
                 return HttpResponse.badRequest();
             }
-
             //return HttpResponse.noContent().header(HttpHeaders.LOCATION, "FAFA");
-
         }
         return HttpResponse.notFound(contact.getId());
     }
@@ -138,8 +137,8 @@ public class ContactController {
     //@Delete(uri="/delete/{id}", produces="text/plain")
     @Operation(summary = "Delete contact", description = "Delete a existing contact")
     @ApiResponse(responseCode = "200", description = "Contact deleted")
+    @ApiResponse(responseCode = "401", description = "Unauthorized")
     @ApiResponse(responseCode = "404", description = "Contact not found")
-    @Tag(name = "Delete contact")
 
     @Delete(uri="/delete/{id}")
     public HttpResponse deleteContact(final Long id){
@@ -156,6 +155,7 @@ public class ContactController {
         return HttpResponse.notFound();
     }
 
+    //Validate user's data
     private boolean validateContact(final Contact contact){
         final String name = "^[0-9A-Za-z]{3,50}$",
                 phone = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$",

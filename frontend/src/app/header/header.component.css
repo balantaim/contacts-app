@@ -1,0 +1,10 @@
+*{
+    color: indigo;
+}
+.center {
+    text-align: center;
+}
+.big-text{
+    font-size: 2.2em;
+    margin: 40px;
+}

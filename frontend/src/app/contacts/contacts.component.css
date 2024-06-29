@@ -1,0 +1,8 @@
+.contact-full-width{
+    width: 100%;
+}
+.contacts-form{
+    min-width: 50px;
+    max-width: 300px;
+    width: 100%;
+}

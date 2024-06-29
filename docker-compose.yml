@@ -20,6 +20,7 @@ services:
       - "4200:4200"
     depends_on:
       - db
+      - b-end
 
   b-end:
     build:
@@ -33,7 +34,6 @@ services:
       - SPRING_DATASOURCE_PASSWORD=admin
     depends_on:
       - db
-      - f-end
 
 volumes:
   db_data:

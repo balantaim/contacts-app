@@ -1,3 +1,4 @@
+
 Your project will be evaluated from various angles: code structure, design, API signature, testing, documentation. Importance should be given to the structure of the project and design of the packages. The correctness of algorithms comes second in relation to API design. Your code needs to be easy to follow and easy to maintain for other developers. You should focus on writing your best code. It doesn't matter if the service is incomplete.
 
 
@@ -36,7 +37,7 @@ Your goal is to design and implement a simple full stack application that manage
 
 - Email address/es
 
-If you decide to add more (such as street address, birthday, notest,  etc.) go for it.
+If you decide to add more (such as street address, birthday, notes,  etc.) go for it.
 
 
 

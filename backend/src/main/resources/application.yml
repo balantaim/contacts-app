@@ -1,4 +1,7 @@
+# Micronaut configuration
 micronaut:
+
+# Security settings
   security:
     enabled: true
     basic-auth:
@@ -11,6 +14,7 @@ micronaut:
       login-success: /login/authSuccess
       login-failure: /login/authFailed
 
+# Enable /login and /logout default endpoints
     endpoints:
       login:
         enabled: true
@@ -19,6 +23,7 @@ micronaut:
         enabled: true
         path: /logout
 
+# Enable endpoints for unauthenticated user with GET
     intercept-url-map:
       - pattern: /swagger-ui/**
         httpMethod: GET
@@ -28,6 +33,22 @@ micronaut:
         httpMethod: GET
         access:
           - isAnonymous()
+
+# Path /v1/** only for authenticated users
       - pattern: /v1/**
         access:
           - isAuthenticated()
+
+# Make rules for cors
+  server:
+    cors:
+      enabled: true
+      configurations:
+#        all:
+#          allowed-origins:
+#            - http://127.0.0.1:4200
+
+# Allow cors for front-end app
+        web:
+          allowed-origins:
+            - http://127.0.0.1:4200

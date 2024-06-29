@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Secured(SecurityRule.IS_AUTHENTICATED)
+//Swagger Tag Name
 @Tag(name = "Contact Controller CRUD")
 @Controller("/")
 public class ContactController {
@@ -182,6 +183,5 @@ public class ContactController {
         log.error("Validation failed!");
         return result;
     }
-
 
 }

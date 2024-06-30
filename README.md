@@ -38,6 +38,10 @@ ng generate component component-name
 
 ng add @angular/material
 
+### Install cookies service 
+
+npm install ngx-cookie-service
+
 ### Start the application
 
 ng serve

@@ -1,79 +1,121 @@
 import { Component } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
-import { UserInterface } from '../user.interface';
+import { CookieService } from 'ngx-cookie-service';
+// import { Router } from '@angular/router';
+// import { UserInterface } from '../user.interface';
+// import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-loginform',
   templateUrl: './loginform.component.html',
   styleUrl: './loginform.component.css',
 
-  // standalone: true,
-  // imports: [ReactiveFormsModule],
+  //standalone: true,
+  //imports: [MatIconModule, MatDividerModule, MatButtonModule],
 })
 
 export class LoginformComponent {
   title = 'login';
 
-  constructor(private http: HttpClient){}
+  loginForm: FormGroup;
 
-  // fb = inject(FormBuilder);
-  // http = inject(HttpClient);
-   authService = inject(AuthService);
+  constructor(
+    private http: HttpClient, 
+    private authService: AuthService, 
+    private fb: FormBuilder, 
+    private cookieService: CookieService
+  ) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
   // router = inject(Router);
 
-  // form = this.fb.nonNullable.group({
-  //   username: ['', Validators.required],
-  //   password: ['', Validators.required],
-  // });
-
   onSubmit(): void {
-    
+    const formValues = this.loginForm.value;
 
+    const body = {
+      username: formValues.username,
+      password: formValues.password,
+    };
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
 
     this.http
-      .post<{ user: UserInterface }>(
+      .post<any>(
         'http://localhost:5000/login',
+        body,
         {
-          username: "user",
-          password: "pass",
-          session: ""
+          headers, observe: 'response', withCredentials: true
         }
       )
       .subscribe((response) => {
-        //console.log('response', response);
+        console.log(response.url);
+        if (response.url !== "http://localhost:5000/login/authFailed") {
+          alert('Authentication Success!')
+        }else{
+          alert('Authentication failed!')
+        }
+      }, (error) => {alert('Authentication failed!')}
+      );
+
+  }
+
+  getStatus(): void {
+    this.http
+    .get<any>(
+      'http://localhost:5000/status/info',
+      {
+        observe: 'response', withCredentials: true
+      }
+    )
+    .subscribe((response) => {
+      let body = JSON.parse(JSON.stringify(response)).body;
+      console.log(body);
+      if (response.ok) {
+        alert('You are logged!')
+      } else {
+        alert('You are not authenticated!')
+      }
+    });
+
+  }
+
+  logout(): void {
+    this.http
+      .post<any>(
+        'http://localhost:5000/logout', {},
+        {
+          observe: 'response', withCredentials: true
+        }
+      )
+      .subscribe((response) => {
         console.log(response);
-        localStorage.setItem('SESSION', response.user.session);
-        this.authService.currentUserSig.set(response.user);
-        // this.router.navigateByUrl('/');
-      });
-  }
-
-  ngOnInit(): void{
-
-    const user: UserInterface = {"username" : "user", "password" : "pass", "session" : ""};
-
-
-    this.http
-      .post<{ user: UserInterface }>(
-        'http://localhost:5000/login',
-        {
-          username: "user",
-          password: "pass",
-          session: ""
+        if (response.ok) {
+          alert('You are loged out!')
+        } else {
+          alert('Someting goes wrong!')
         }
-      )
-      .subscribe((response) => {
-        //console.log('response', response);
-        //console.log(response);
-         localStorage.setItem('SESSION', response.user.session);
-         this.authService.currentUserSig.set(response.user);
-         //this.router.navigateByUrl('/');
       });
-    
+      //Delete session from the cookies
+      this.deleteCookie('SESSION');
   }
+
+  deleteCookie(cookieName: string) {
+    //Delete single cookie by name
+    this.cookieService.delete(cookieName);
+    //Delete all cookies
+    //this.cookieService.deleteAll();
+  }
+
+  ngOnInit(): void {
+    //this.onSubmit();
+  }
+
 }

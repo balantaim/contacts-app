@@ -1,0 +1,27 @@
+<div class="main">
+  <h2>Add Contact</h2>
+
+  <!-- <div class="container get-all-filter">
+    <button type="button" (click)="createContact()" clickable>Add contact</button>
+  </div> -->
+
+  <form [formGroup]="addForm" (ngSubmit)="createContact()">
+    <div>
+      <input id="firstName" type="text" placeholder="firstName" name="firstName" formControlName="firstName" required />
+    </div>
+    <div>
+      <input id="lastName" type="text" placeholder="lastName" name="lastName" formControlName="lastName" required />
+    </div>
+    <div>
+      <input id="phoneNumber" type="text" placeholder="phoneNumber" name="phoneNumber" formControlName="phoneNumber" required />
+    </div>
+    <div>
+      <input id="email" type="text" placeholder="email" name="email" formControlName="email" required />
+    </div>
+    
+    <div>
+      <button type="submit">Add Contact</button>
+    </div>
+
+  </form>
+</div>

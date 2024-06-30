@@ -1,13 +1,31 @@
-<h1>Login form</h1>
+<div class="main">
+  <div class="container">
+    <h2>Login form</h2>
+    <p>In order to Login use: Username: <b>user</b> and Password: <b>pass</b></p>
 
-<form (ngSubmit)="onSubmit()">
-    <div>
-      <input type="text" placeholder="Username" formControlName="username" />
-    </div>
-    <div>
-      <input type="password" placeholder="Password" formControlName="password" />
-    </div>
-    <div>
-      <button type="submit">Sign In</button>
-    </div>
-  </form>
+    <!-- Login   -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div>
+        <input id="username" type="text" placeholder="Username" name="username" formControlName="username" required />
+      </div>
+      <div>
+        <input id="password" type="password" placeholder="Password" name="password" formControlName="password"
+          required />
+      </div>
+      <div>
+        <button mat-stroked-button type="submit">Sign In</button>
+      </div>
+    </form>
+
+    <!-- Get status -->
+    <div class="space"></div>
+    <h2>Check Status</h2>
+    <button mat-stroked-button type="button" (click)="getStatus()" clickable>Status</button>
+
+    <!-- Logout -->
+    <div class="space"></div>
+    <h2>Logout</h2>
+
+    <button mat-stroked-button type="button" (click)="logout()" clickable>Logout</button>
+  </div>
+</div>

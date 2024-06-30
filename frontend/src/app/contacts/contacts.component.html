@@ -1,78 +1,35 @@
 <div class="main">
-   <h1>My contacts</h1>
+  <h2>All Contacts</h2>
 
-   <div class="container get-by-id">
-      <button type="button" (click)="findContactById()" clickable>Find by contact ID</button>
-   </div>
+  <div class="container get-by-id">
+    <button type="button" (click)="findContactById()" clickable>Find by contact ID</button>
+  </div>
 
-   <div class="container get-all-filter">
-      <button type="button" (click)="searchWithFilter('123')" clickable>Filter contacts</button>
-   </div>
+  <div class="container get-all-filter">
+    <button type="button" (click)="searchWithFilter('123')" clickable>Filter contacts</button>
+  </div>
 
-   <!-- <div class="container update-data">
-      <button type="button" (click)="updateContact()" clickable>Update contact</button>
-   </div> -->
+  <!-- <app-contacts *ngFor="let contact of contacts" [contact]="contact"/> -->
+  <div class="container get-all">
 
-   <div class="container delete-data">
-      <button type="button" (click)="deleteContact()" clickable>Delete contact</button>
-   </div>
+    <mat-card appearance="outlined" style="padding: 6px;">
+      @for (contact of contacts; track contact.id) {
 
-   <!-- <app-contacts *ngFor="let contact of contacts" [contact]="contact"/> -->
-   <div class="container get-all">
-      <!-- @for (contact of contacts; track contact.id) {
-      <p>{{ contact.email }}</p>
-      } -->
-      
-      <!-- <mat-card appearance="outlined">
-         <mat-card-header>
-           <mat-card-title>{{defaultContact.firstName}} {{defaultContact.lastName}}</mat-card-title>
-           <mat-card-subtitle>Herding group</mat-card-subtitle>
-         </mat-card-header>
-         <mat-card-actions>
-           <button mat-button>Learn More</button>
-         </mat-card-actions>
-       </mat-card>
-       <br>
-       <mat-card appearance="outlined">
-         <mat-card-header>
-           <mat-card-title>Poodle</mat-card-title>
-           <mat-card-subtitle>Non-sporting group</mat-card-subtitle>
-         </mat-card-header>
-         <mat-card-actions align="end">
-           <button mat-button>Learn More</button>
-         </mat-card-actions>
-       </mat-card> -->
-        
-   </div>
+      <mat-card appearance="outlined"  style="padding: 6px;">
+        <mat-card-header>
+          <mat-card-title>{{contact.firstName}} {{contact.lastName}}</mat-card-title>
+          <mat-card-subtitle>ID: {{contact.id}}, 
+            <br>Phone: {{contact.phoneNumber}}, 
+            <br>Email: {{contact.email}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+          <!-- <button mat-button>Learn More</button> -->
+        </mat-card-actions>
+      </mat-card>
+      <br>
+      }
+    </mat-card>
 
-   <div>
-      <form #contactsForm="ngForm" class="contacts-form" (ngSubmit)="createContact()">
-
-         <mat-form-field class="contact-full-width">
-            <mat-label>First Name</mat-label>
-            <input name="firstName" ngModel matInput placeholder="First Name">
-          </mat-form-field>
-
-          <mat-form-field class="contact-full-width">
-            <mat-label>Last Name</mat-label>
-            <input name="lastName" ngModel matInput placeholder="Last Name">
-          </mat-form-field>
-
-          <mat-form-field class="contact-full-width">
-            <mat-label>Phone Number</mat-label>
-            <input name="phoneNumber" ngModel matInput placeholder="Phone Number">
-          </mat-form-field>
-
-          <mat-form-field class="contact-full-width">
-            <mat-label>Email</mat-label>
-            <input  name="email" ngModel matInput placeholder="Email">
-          </mat-form-field>
-
-          <button type="submit" mat-raised-button>Create</button>
-
-      </form>
-   </div>
-
-   <app-contacts (newDataEvent)="appendData($event)"/>
+  </div>
 
 </div>

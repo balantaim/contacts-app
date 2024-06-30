@@ -11,7 +11,7 @@ micronaut:
       enabled: true
     redirect:
       logout: /status/info
-      login-success: /login/authSuccess
+#      login-success: /login/authSuccess
       login-failure: /login/authFailed
 
 # Enable /login and /logout default endpoints

@@ -6,3 +6,9 @@
     max-width: 300px;
     width: 100%;
 }
+mat-card-subtitle, mat-card-title{
+    color: burlywood !important;
+}
+.get-all{
+    margin: 20px, 0, 20px, 0;
+}

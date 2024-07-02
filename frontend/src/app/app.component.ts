@@ -9,7 +9,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'contacts-app';
 
-  // constructor(private http: HttpClient){}
 
   // ngOnInit(): void{
 

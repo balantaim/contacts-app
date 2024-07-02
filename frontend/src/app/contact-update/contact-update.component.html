@@ -1,7 +1,26 @@
 <div class="main">
     <h2>Update Contact</h2>
 
-    <div class="container update-data">
-        <button type="button" (click)="updateContact()" clickable>Update contact</button>
-    </div>
+    <form [formGroup]="updateForm" (ngSubmit)="updateContact()">
+        <div>
+            <input id="id" type="number" placeholder="contact ID" name="id" formControlName="id" required />
+        </div>
+        <div>
+          <input id="firstName" type="text" placeholder="firstName" name="firstName" formControlName="firstName" required />
+        </div>
+        <div>
+          <input id="lastName" type="text" placeholder="lastName" name="lastName" formControlName="lastName" required />
+        </div>
+        <div>
+          <input id="phoneNumber" type="text" placeholder="phoneNumber" name="phoneNumber" formControlName="phoneNumber" required />
+        </div>
+        <div>
+          <input id="email" type="text" placeholder="email" name="email" formControlName="email" required />
+        </div>
+        
+        <div>
+          <button type="submit">Update Contact</button>
+        </div>
+    
+      </form>
 </div>

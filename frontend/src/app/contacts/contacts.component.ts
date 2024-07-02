@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, ViewChild, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Contact } from '../value-object/contact';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-import { MatButtonModule } from '@angular/material/button';
+import { HttpClient } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
-import { NgForm } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
+import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
+//import { NgForm } from '@angular/forms';
+//import { MatButtonModule } from '@angular/material/button';
+//import { MatIconModule } from '@angular/material/icon';
+//import { MatDividerModule } from '@angular/material/divider';
+//import { Component, EventEmitter, Input, ViewChild, Output } from '@angular/core';
 
 
 
@@ -20,62 +20,63 @@ import { MatDividerModule } from '@angular/material/divider';
   styleUrl: './contacts.component.css',
 
   standalone: true,
-  imports: [MatCardModule, MatInputModule, MatFormFieldModule, FormsModule]
+  imports: [MatCardModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule]
   //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsComponent {
   title = 'contacts';
 
-  @Input() defaultContact: Contact = new Contact(0, '', '', '', '');
+  //@Input() defaultContact: Contact = new Contact(0, '', '', '', '');
 
   contacts: Contact[] = [];
+
+  contactById: Contact = new Contact(0, '', '', '', '');
+
+  filterValue = new FormControl('');
+  idValue = new FormControl('');
 
   constructor(private http: HttpClient) { }
 
   findContactById(): void {
+    if(this.idValue.value == '' || this.idValue.value == null){
+      alert('Enter valid ID number!');
+      return;
+    }
+
     this.http.get<Contact>(
-      "http://localhost:5000/find/", {withCredentials: true}
-    ).subscribe(data =>
-      //this.contacts = data
+      "http://localhost:5000/find/" + this.idValue.value, 
+      { withCredentials: true}
+    ).subscribe((data) => {
+      this.contactById = data;
       console.log(data)
+    },
+    (error) => {
+      alert('Contact not found!');
+      this.contactById = new Contact(0, '', '', '', '');
+    }
     );
   }
 
-  searchWithFilter(filter: string): void {
-    this.http.get<Contact[]>(
-      `http://localhost:5000/?filter=${filter}`, {withCredentials: true}
-    ).subscribe(data =>
-      //this.contacts = data
-      console.log(data)
-    );
-  }
+  getAllContacts(): void{
+    let url: string = 'http://localhost:5000';
 
-  getAllContacts(): void {
+    if(this.filterValue.value !== null && 
+      this.filterValue.value !== undefined && 
+      this.filterValue.value.length > 0){
+      url = url + '/?filter=' + this.filterValue.value;
+    }
 
     this.http.get<Contact[]>(
-      "http://localhost:5000", {withCredentials: true}
+      url, 
+      {withCredentials: true}
     ).subscribe(data =>
       this.contacts = data
       //console.log(data)
     );
   }
 
-  ngOnInit(): void {
-    console.log("contacts init!")
-
-    this.http.get<Contact[]>(
-      "http://localhost:5000", {withCredentials: true}
-    ).subscribe(data =>
-      this.contacts = data
-      //console.log(data)
-    );
-  }
-
-  //video
   // @ViewChild("contactsFrom") contactsForm!: NgForm;
 
   // @Output() newDataEvent = new EventEmitter();
-
-
 
 }

@@ -1,21 +1,38 @@
 <div class="main">
-  <h2>All Contacts</h2>
+  <h2>Contacts</h2>
+
+  <p>Search by contact by ID</p>
+
+  <input id="idValue" type="number" name="idValue" placeholder="ID number" [formControl]="idValue">
 
   <div class="container get-by-id">
-    <button type="button" (click)="findContactById()" clickable>Find by contact ID</button>
+    <button type="button" (click)="findContactById()" clickable>Find Contact by ID</button>
   </div>
+
+  <div class="container">
+    <p>{{contactById.firstName}}</p>
+    <p>{{contactById.lastName}}</p>
+    <p>{{contactById.phoneNumber}}</p>
+    <p>{{contactById.email}}</p>
+  </div>
+
+  <hr>
+
+  <p>Search by keyword (Optional)</p>
+
+  <input id="filterValue" type="text" name="filterValue" placeholder="Optional keyword" [formControl]="filterValue">
 
   <div class="container get-all-filter">
-    <button type="button" (click)="searchWithFilter('123')" clickable>Filter contacts</button>
+    <button #btnFilter type="button" (click)="getAllContacts()" clickable>Find All Contacts</button>
   </div>
 
-  <!-- <app-contacts *ngFor="let contact of contacts" [contact]="contact"/> -->
+  
   <div class="container get-all">
 
     <mat-card appearance="outlined" style="padding: 6px;">
       @for (contact of contacts; track contact.id) {
 
-      <mat-card appearance="outlined"  style="padding: 6px;">
+      <mat-card appearance="outlined" style="padding: 6px;">
         <mat-card-header>
           <mat-card-title>{{contact.firstName}} {{contact.lastName}}</mat-card-title>
           <mat-card-subtitle>ID: {{contact.id}}, 

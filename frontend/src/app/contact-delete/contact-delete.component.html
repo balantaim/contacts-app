@@ -1,6 +1,8 @@
 <div class="main">
   <h2>Delete Contact</h2>
 
+  <input id="filterValue" type="number" name="filterValue" placeholder="contact ID" [formControl]="idValue">
+
   <div class="container delete-data">
     <button type="button" (click)="deleteContact()" clickable>Delete contact</button>
   </div>

@@ -1,10 +1,6 @@
 <div class="main">
   <h2>Add Contact</h2>
 
-  <!-- <div class="container get-all-filter">
-    <button type="button" (click)="createContact()" clickable>Add contact</button>
-  </div> -->
-
   <form [formGroup]="addForm" (ngSubmit)="createContact()">
     <div>
       <input id="firstName" type="text" placeholder="firstName" name="firstName" formControlName="firstName" required />

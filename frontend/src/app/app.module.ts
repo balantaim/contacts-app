@@ -14,6 +14,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { ContactAddComponent } from './contact-add/contact-add.component';
 import { ContactDeleteComponent } from './contact-delete/contact-delete.component';
 import { ContactUpdateComponent } from './contact-update/contact-update.component';
+import { AuthFailedComponent } from './auth-failed/auth-failed.component';
+
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,7 @@ import { ContactUpdateComponent } from './contact-update/contact-update.componen
     ContactAddComponent,
     ContactDeleteComponent,
     ContactUpdateComponent,
+    AuthFailedComponent,
     //ContactsComponent,
   ],
   imports: [
@@ -31,6 +36,9 @@ import { ContactUpdateComponent } from './contact-update/contact-update.componen
     ContactsComponent,
     FormsModule,
     ReactiveFormsModule,
+    
+    MatFormFieldModule, 
+    MatInputModule,
   ],
   providers: [
     provideAnimationsAsync(),

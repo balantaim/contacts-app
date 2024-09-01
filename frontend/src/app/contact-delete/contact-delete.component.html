@@ -1,9 +1,27 @@
 <div class="main">
-  <h2>Delete Contact</h2>
 
-  <input id="filterValue" type="number" name="filterValue" placeholder="contact ID" [formControl]="idValue">
+  <div class="columns is-mobile is-vcentered is-centered">
+    <div class="column"></div>
 
-  <div class="container delete-data">
-    <button type="button" (click)="deleteContact()" clickable>Delete contact</button>
+    <div class="column">
+
+      <h2 class="has-text-centered">Delete Contact</h2>
+
+      <div class="space"></div>
+
+      <!-- <input id="filterValue" type="number" name="filterValue" placeholder="contact ID" [formControl]="idValue"> -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Contact ID</mat-label>
+        <input matInput placeholder="Enter your contact ID" id="filterValue" type="number" name="filterValue" [formControl]="idValue" required min="1">
+      </mat-form-field>
+    
+      <div class="delete-data has-text-centered">
+        <button type="button" class="button is-danger is-rounded" (click)="deleteContact()" clickable>Delete contact</button>
+      </div>
+
+    </div>
+
+    <div class="column"></div>
   </div>
+
 </div>

@@ -5,9 +5,11 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { ContactAddComponent } from './contact-add/contact-add.component';
 import { ContactUpdateComponent } from './contact-update/contact-update.component';
 import { ContactDeleteComponent } from './contact-delete/contact-delete.component';
+import { AuthFailedComponent } from './auth-failed/auth-failed.component';
 
 const routes: Routes = [
   {path: '', component:LoginformComponent},
+  {path: 'authFailed', component:AuthFailedComponent},
   {path: 'contacts', component:ContactsComponent},
   {path: 'add', component:ContactAddComponent},
   {path: 'update', component:ContactUpdateComponent},

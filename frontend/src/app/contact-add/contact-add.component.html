@@ -1,23 +1,53 @@
 <div class="main">
-  <h2>Add Contact</h2>
 
-  <form [formGroup]="addForm" (ngSubmit)="createContact()">
-    <div>
-      <input id="firstName" type="text" placeholder="firstName" name="firstName" formControlName="firstName" required />
-    </div>
-    <div>
-      <input id="lastName" type="text" placeholder="lastName" name="lastName" formControlName="lastName" required />
-    </div>
-    <div>
-      <input id="phoneNumber" type="text" placeholder="phoneNumber" name="phoneNumber" formControlName="phoneNumber" required />
-    </div>
-    <div>
-      <input id="email" type="text" placeholder="email" name="email" formControlName="email" required />
-    </div>
-    
-    <div>
-      <button type="submit">Add Contact</button>
+  <div class="columns is-mobile is-vcentered is-centered">
+    <div class="column"></div>
+
+    <div class="column">
+
+      <h2 class="has-text-centered">Add a new Contact</h2>
+
+      <div class="space"></div>
+
+      <form [formGroup]="addForm" (ngSubmit)="createContact()">
+        <div>
+          <!-- <input id="firstName" type="text" placeholder="firstName" name="firstName" formControlName="firstName" required /> -->
+          <mat-form-field class="example-full-width">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="Enter your first name" id="firstName" type="text" name="firstName" formControlName="firstName" required>
+          </mat-form-field>
+        </div>
+        <div>
+          <!-- <input id="lastName" type="text" placeholder="lastName" name="lastName" formControlName="lastName" required /> -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Enter your last name" id="lastName" type="text" name="lastName" formControlName="lastName" required>
+          </mat-form-field>
+        </div>
+        <div>
+          <!-- <input id="phoneNumber" type="text" placeholder="phoneNumber" name="phoneNumber" formControlName="phoneNumber" required /> -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput placeholder="Enter your phone number" id="phoneNumber" type="text" name="phoneNumber" formControlName="phoneNumber" required>
+          </mat-form-field>
+        </div>
+        <div>
+          <!-- <input id="email" type="text" placeholder="email" name="email" formControlName="email" required /> -->
+          <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Enter your email" id="email" type="email" name="email" formControlName="email" required>
+          </mat-form-field>
+        </div>
+
+        <div class="has-text-centered">
+          <button type="submit" class="button is-success is-rounded">Add Contact</button>
+        </div>
+
+      </form>
+
     </div>
 
-  </form>
+    <div class="column"></div>
+  </div>
+
 </div>

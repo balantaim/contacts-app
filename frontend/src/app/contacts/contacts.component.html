@@ -1,52 +1,73 @@
 <div class="main">
-  <h2>Contacts</h2>
+ 
+  <div class="columns is-mobile is-vcentered is-centered">
+    <div class="column"></div>
 
-  <p>Search by contact by ID</p>
+    <div class="column">
+      <h2 class="has-text-centered">Contacts</h2>
 
-  <input id="idValue" type="number" name="idValue" placeholder="ID number" [formControl]="idValue">
+      <div class="space"></div>
 
-  <div class="container get-by-id">
-    <button type="button" (click)="findContactById()" clickable>Find Contact by ID</button>
-  </div>
+      <p>Search by contact by ID</p>
+    
+      <!-- <input id="idValue" type="number" name="idValue" placeholder="ID number" [formControl]="idValue"> -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Contact ID</mat-label>
+        <input matInput placeholder="Enter your contact ID" id="idValue" type="number" name="idValue" [formControl]="idValue" required min="1">
+      </mat-form-field>
+    
+      <div class="container get-by-id has-text-centered">
+        <button type="button" class="button is-success is-rounded" (click)="findContactById()" clickable>Find Contact by ID</button>
+      </div>
+    
+      <div class="container">
+        <p>{{contactById.firstName}}</p>
+        <p>{{contactById.lastName}}</p>
+        <p>{{contactById.phoneNumber}}</p>
+        <p>{{contactById.email}}</p>
+      </div>
+    
+      <hr>
+    
+      <p>Search by keyword (Optional)</p>
+    
+      <!-- <input id="filterValue" type="text" name="filterValue" placeholder="Optional keyword" [formControl]="filterValue"> -->
 
-  <div class="container">
-    <p>{{contactById.firstName}}</p>
-    <p>{{contactById.lastName}}</p>
-    <p>{{contactById.phoneNumber}}</p>
-    <p>{{contactById.email}}</p>
-  </div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Keyword</mat-label>
+        <input matInput placeholder="Optional keyword" type="text" id="filterValue" name="filterValue" [formControl]="filterValue">
+      </mat-form-field>
+    
+      <div class="container get-all-filter has-text-centered">
+        <button #btnFilter type="button" class="button is-success is-rounded" (click)="getAllContacts()" clickable>Find All Contacts</button>
+      </div>
+    
+      
+      <div *ngIf="contacts.length > 0" class="container get-all">
+    
+        <mat-card appearance="outlined" style="padding: 6px;">
+          @for (contact of contacts; track contact.id) {
+    
+          <mat-card appearance="outlined" style="padding: 6px;">
+            <mat-card-header>
+              <mat-card-title>{{contact.firstName}} {{contact.lastName}}</mat-card-title>
+              <mat-card-subtitle>ID: {{contact.id}}, 
+                <br>Phone: {{contact.phoneNumber}}, 
+                <br>Email: {{contact.email}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+              <!-- <button mat-button>Learn More</button> -->
+            </mat-card-actions>
+          </mat-card>
+          <br>
+          }
+        </mat-card>
+    
+      </div>
+    </div>
 
-  <hr>
 
-  <p>Search by keyword (Optional)</p>
-
-  <input id="filterValue" type="text" name="filterValue" placeholder="Optional keyword" [formControl]="filterValue">
-
-  <div class="container get-all-filter">
-    <button #btnFilter type="button" (click)="getAllContacts()" clickable>Find All Contacts</button>
-  </div>
-
-  
-  <div class="container get-all">
-
-    <mat-card appearance="outlined" style="padding: 6px;">
-      @for (contact of contacts; track contact.id) {
-
-      <mat-card appearance="outlined" style="padding: 6px;">
-        <mat-card-header>
-          <mat-card-title>{{contact.firstName}} {{contact.lastName}}</mat-card-title>
-          <mat-card-subtitle>ID: {{contact.id}}, 
-            <br>Phone: {{contact.phoneNumber}}, 
-            <br>Email: {{contact.email}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-actions>
-          <!-- <button mat-button>Learn More</button> -->
-        </mat-card-actions>
-      </mat-card>
-      <br>
-      }
-    </mat-card>
-
+    <div class="column"></div>
   </div>
 
 </div>

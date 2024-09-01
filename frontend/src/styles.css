@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
+:root {
+    --background-color: #ffffff;
+    --primary-color: #1976d2;
+    --secondary-color: #ff4081;
+    --text-color: #000000;
+    --link-color: #1976d2;
+    --border-color: #e0e0e0;
+}
+
 *{
     box-sizing: border-box;
 }
@@ -18,7 +28,7 @@ h1{
 .main{
     padding: 20px;
     margin-top: auto;
-    width: 50%;
+    /* width: 50%; */
 }
 .space{
     height: 40px;
@@ -33,3 +43,14 @@ button{
     margin-bottom: 20px;
     min-width: 158px;
 }
+
+/* Input Field */
+.example-form {
+    min-width: 150px;
+    /* max-width: 500px; */
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }

@@ -50,27 +50,27 @@ ng serve
 
 ### Build project
 
-.\gradlew build
+./gradlew build
 
 ### Build run
 
-.\gradlew run
+./gradlew run
 
 ### Run test
 
-.\gradlew test
+./gradlew test
 
 ### Debug
 
-.\gradlew assembleDebug  --warning-mode=all
+./gradlew assembleDebug  --warning-mode=all
 
-.\gradlew assembleDebug  --stacktrace
+./gradlew assembleDebug  --stacktrace
 
 ## Startup your project
 
 ### First create executable jar from backend
 
-cd .\backend
+cd ./backend
 
 ./gradlew shadowJar
 

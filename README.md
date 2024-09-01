@@ -76,6 +76,6 @@ cd ./backend
 
 ### Then start the container from root directory
 
-cd..
+cd ..
 
 docker-compose up --build

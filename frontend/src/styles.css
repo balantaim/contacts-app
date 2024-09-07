@@ -38,7 +38,7 @@ h1{
     width: 60%;;
     padding: 10px;
 }
-button{
+.custom-button{
     margin-top: 20px;
     margin-bottom: 20px;
     min-width: 158px;

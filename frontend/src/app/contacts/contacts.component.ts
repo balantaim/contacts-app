@@ -76,8 +76,4 @@ export class ContactsComponent {
     );
   }
 
-  // @ViewChild("contactsFrom") contactsForm!: NgForm;
-
-  // @Output() newDataEvent = new EventEmitter();
-
 }

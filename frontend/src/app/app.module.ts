@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { LoginformComponent } from './loginform/loginform.component';
+//import { LoginformComponent } from './loginform/loginform.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -16,18 +16,20 @@ import { ContactDeleteComponent } from './contact-delete/contact-delete.componen
 import { ContactUpdateComponent } from './contact-update/contact-update.component';
 import { AuthFailedComponent } from './auth-failed/auth-failed.component';
 
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoginformComponent,
+    //LoginformComponent,
     ContactAddComponent,
     ContactDeleteComponent,
     ContactUpdateComponent,
     AuthFailedComponent,
+    PageNotFoundComponent,
     //ContactsComponent,
   ],
   imports: [
@@ -36,7 +38,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     ContactsComponent,
     FormsModule,
     ReactiveFormsModule,
-    
     MatFormFieldModule, 
     MatInputModule,
   ],

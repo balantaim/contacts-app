@@ -6,7 +6,7 @@
 
 ### Backend
 
-- Java 17, Micronaut, Gradle, Hibernate, OpenAPI v3
+- Java 17, Micronaut, Gradle, Hibernate, Lombok, OpenAPI v3
 
 ### Other software
 
@@ -34,11 +34,19 @@ npm install -g @angular/cli
 
 ng generate component component-name
 
+### Create service with <component_name>
+
+ng generate service service/auth
+
+### Create security class with <component_name>
+
+ng generate guard auth
+
 ### Add Angular material theme (Optional)
 
 ng add @angular/material
 
-### Install cookies service 
+### Install cookies service (Optional)
 
 npm install ngx-cookie-service
 

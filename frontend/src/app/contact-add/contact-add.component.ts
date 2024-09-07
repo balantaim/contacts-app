@@ -45,7 +45,6 @@ export class ContactAddComponent {
         alert('Invalid data!');
       }
     );
-
   }
 
 }

@@ -6,14 +6,21 @@ import { ContactAddComponent } from './contact-add/contact-add.component';
 import { ContactUpdateComponent } from './contact-update/contact-update.component';
 import { ContactDeleteComponent } from './contact-delete/contact-delete.component';
 import { AuthFailedComponent } from './auth-failed/auth-failed.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  {path: '', component:LoginformComponent},
+  //Public routes
+  {path: '', component:LoginformComponent}, //Login view
   {path: 'authFailed', component:AuthFailedComponent},
-  {path: 'contacts', component:ContactsComponent},
-  {path: 'add', component:ContactAddComponent},
-  {path: 'update', component:ContactUpdateComponent},
-  {path: 'delete', component:ContactDeleteComponent},
+  {path: 'page-not-found', component:PageNotFoundComponent},
+  //Secured routes
+  {path: 'contacts', component:ContactsComponent, canActivate: [AuthGuard]},
+  {path: 'add', component:ContactAddComponent, canActivate: [AuthGuard]},
+  {path: 'update', component:ContactUpdateComponent, canActivate: [AuthGuard]},
+  {path: 'delete', component:ContactDeleteComponent, canActivate: [AuthGuard]},
+  //Default route
+  { path: '**', redirectTo: 'page-not-found' }
 ];
 
 @NgModule({

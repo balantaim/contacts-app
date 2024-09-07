@@ -3,37 +3,34 @@
         <div class="big-text has-text-centered is-centered has-text-weight-bold">
             <a href="#" routerLink="/">Contacts Application</a>
         </div>
-        <nav class="if-flex is-justify-content-space-around">
+        <nav class="is-justify-content-space-around">
 
             <div class="level">
-                <div class="level-item has-text-centered">
+                <div class="level-item has-text-centered" *ngIf="!getAuthenticatedStatus()">
                     <a href="#" routerLink="/" class="is-inline-block">Login</a>
                 </div>
-                <div class="level-item has-text-centered">
+                <div class="level-item has-text-centered" *ngIf="getAuthenticatedStatus()">
                     <a href="#" routerLink="/contacts" class="is-inline-block">Contacts</a>
                 </div>
-                <div class="level-item has-text-centered">
+                <div class="level-item has-text-centered" *ngIf="getAuthenticatedStatus()">
                     <a href="#" routerLink="/add" class="is-inline-block">Add Contact</a>
                 </div>
-                <div class="level-item has-text-centered">
+                <div class="level-item has-text-centered" *ngIf="getAuthenticatedStatus()">
                     <a href="#" routerLink="/update" class="is-inline-block">Update Contact</a>
                 </div>
-                <div class="level-item has-text-centered">
+                <div class="level-item has-text-centered" *ngIf="getAuthenticatedStatus()">
                     <a href="#" routerLink="/delete" class="is-inline-block">Delete Contact</a>
                 </div>
                 <div class="level-item has-text-centered">
                     <a href="http://localhost:5000/swagger-ui" target='_blank' class="is-inline-block">Swagger</a>
                 </div>
+                <div class="level-item has-text-centered" style="cursor: pointer;" (click)="userExit()" *ngIf="getAuthenticatedStatus()">
+                    <p class="is-inline-block">Logout</p>
+                </div>
             </div>
 
-            <!-- <a href="#" routerLink="/">Login</a>
-            <a href="#" routerLink="/contacts">Contacts</a>
-            <a href="#" routerLink="/add">Add Contact</a>
-            <a href="#" routerLink="/update">Update Contact</a>
-            <a href="#" routerLink="/delete">Delete Contact</a>
-            <a href="http://localhost:5000/swagger-ui" target='_blank'>Swagger</a> -->
-
             <hr>
+
         </nav>
     </div>
 </header>

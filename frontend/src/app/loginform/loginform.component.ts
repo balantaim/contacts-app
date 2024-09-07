@@ -41,13 +41,6 @@ export class LoginformComponent {
     });
   }
 
-  // get username() {
-  //   return this.loginForm.get('username');
-  // }
-  // get password() {
-  //   return this.loginForm.get('password');
-  // }
-
   hide = signal(true);
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());

@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class AuthService {
-
-  constructor(private http: HttpClient) {}
+  private url: string | undefined;
+  constructor(private http: HttpClient) {
+    this.url = environment.apiUrl;
+  }
   isLogged: boolean = false;
 
-  tryLogin(body: any,headers: any) {
-    return this.http.post<any>('http://localhost:5000/login',
+  // Login
+  tryLogin(body: any) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post<any>(`${this.url}/login`,
       body,
       {
         headers, observe: 'response', withCredentials: true
@@ -22,7 +27,7 @@ export class AuthService {
 
   // Check if the user is authenticated
   isAuthenticated(): Observable<boolean> {
-    return this.http.get<{ authenticated: boolean }>('http://localhost:5000/status/info', { observe: 'response', withCredentials: true })
+    return this.http.get<{ authenticated: boolean }>(`${this.url}/status/info`, { observe: 'response', withCredentials: true })
       .pipe(
         map(response => {
           let body = JSON.parse(JSON.stringify(response)).body;
@@ -32,10 +37,11 @@ export class AuthService {
       );
   }
 
+  // Logout
   logout(): Observable<any>{
     return this.http
       .post<any>(
-        'http://localhost:5000/logout', {},
+        `${this.url}/logout`, {},
         {
           observe: 'response', withCredentials: true
         }

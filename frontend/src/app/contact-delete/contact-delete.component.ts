@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
+import { ContactService } from '../service/contact.service';
 
 @Component({
   selector: 'app-contact-delete',
@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 export class ContactDeleteComponent {
   title = 'contact-delete';
 
-  constructor(private http: HttpClient) { }
+  constructor(private contactService: ContactService) {}
 
   idValue = new FormControl(0);
 
@@ -19,18 +19,24 @@ export class ContactDeleteComponent {
       alert('Invalid ID!');
       return;
     }
-    this.http.delete(
-      'http://localhost:5000/delete/' + this.idValue.value, 
-      {observe: 'response', withCredentials: true}
-    ).subscribe((data) => {
-      if(data.ok){
-        alert('Contact deleted!');
-      }
-    }, 
-    (error) => {
-      alert('Contact not found!');
-    }
-    );
+
+    this.contactService.deleteContact(this.idValue.value)
+    .subscribe((data) => {
+      alert(data ? 'Contact deleted!':'Something went wrong!');
+      });
+
+    // this.http.delete(
+    //   'http://localhost:5000/delete/' + this.idValue.value, 
+    //   {observe: 'response', withCredentials: true}
+    // ).subscribe((data) => {
+    //   if(data.ok){
+    //     alert('Contact deleted!');
+    //   }
+    // }, 
+    // (error) => {
+    //   alert('Contact not found!');
+    // }
+    // );
   }
 
 }

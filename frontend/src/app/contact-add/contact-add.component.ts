@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Contact } from '../value-object/contact';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ContactService } from '../service/contact.service';
 
 @Component({
   selector: 'app-contact-add',
@@ -11,7 +11,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 export class ContactAddComponent {
 
   constructor(
-    private http: HttpClient,
+    private contactService: ContactService,
     private fb: FormBuilder, 
   ) {
     this.addForm = this.fb.group({
@@ -30,21 +30,26 @@ export class ContactAddComponent {
     const formValues = this.addForm.value;
     const contact = new Contact(0, formValues.firstName, formValues.lastName, formValues.phoneNumber, formValues.email);
 
-    this.http.post<any>(
-      "http://localhost:5000/add", contact,
-      {
-        observe: 'response', withCredentials: true
-      }
-    ).subscribe(data =>
-      {
-        if(data.ok){
-          alert('Contact created!');
-        }
-      },
-      (error) => {
-        alert('Invalid data!');
-      }
-    );
+    this.contactService.createContact(contact)
+    .subscribe(data => {
+      alert(data ? 'Contact created!':'Something went wrong!')
+    });
+
+    // this.http.post<any>(
+    //   "http://localhost:5000/add", contact,
+    //   {
+    //     observe: 'response', withCredentials: true
+    //   }
+    // ).subscribe(data =>
+    //   {
+    //     if(data.ok){
+    //       alert('Contact created!');
+    //     }
+    //   },
+    //   (error) => {
+    //     alert('Invalid data!');
+    //   }
+    // );
   }
 
 }

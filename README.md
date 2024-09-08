@@ -42,6 +42,10 @@ ng generate service service/auth
 
 ng generate guard auth
 
+### Create basic configuration environments
+
+ng generate environments
+
 ### Add Angular material theme (Optional)
 
 ng add @angular/material
@@ -53,6 +57,14 @@ npm install ngx-cookie-service
 ### Start the application
 
 ng serve
+
+### Run Angular tests
+
+ng test
+
+### Build application with specific environment configuration (development, production)
+
+ng build --configuration development
 
 ## Gradle basic commands
 

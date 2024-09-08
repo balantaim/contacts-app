@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Contact } from '../value-object/contact';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ContactService } from '../service/contact.service';
 
 @Component({
   selector: 'app-contact-update',
@@ -12,8 +12,8 @@ export class ContactUpdateComponent {
   title = 'contact-update';
 
   constructor(
-    private http: HttpClient,
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
+    private contactService: ContactService
   ) {
     this.updateForm = this.fb.group({
       id: [0, Validators.required],
@@ -27,25 +27,28 @@ export class ContactUpdateComponent {
   updateForm: FormGroup;
 
   updateContact(): void {
-
     const formValues = this.updateForm.value;
     const contact = new Contact(formValues.id, formValues.firstName, formValues.lastName, formValues.phoneNumber, formValues.email);
 
-    this.http.put<any>(
-      "http://localhost:5000/update", 
-      contact,
-      {
-        observe: 'response', withCredentials: true
-      }
-    ).subscribe((data) => {
-      //this.contacts = data
-      console.log(data);
-      alert('Contact updated!');
-    },
-    (error) => {
-      alert('Invalid data');
-    }
-    );
+    this.contactService.updateContact(contact)
+      .subscribe((data) => {
+        alert(data ? 'Contact updated!':'Something went wrong!');
+      });
+
+    // this.http.put<any>(
+    //   "http://localhost:5000/update", 
+    //   contact,
+    //   {
+    //     observe: 'response', withCredentials: true
+    //   }
+    // ).subscribe((data) => {
+    //   //this.contacts = data
+    //   console.log(data);
+    //   alert('Contact updated!');
+    // },
+    // (error) => {
+    //   alert('Invalid data');
+    // });
   }
 
 }

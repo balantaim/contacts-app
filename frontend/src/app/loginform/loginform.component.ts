@@ -1,11 +1,9 @@
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 
-import { HttpHeaders } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
 //import { CookieService } from 'ngx-cookie-service';
-//import { tap } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -55,11 +53,8 @@ export class LoginformComponent {
       username: formValues.username,
       password: formValues.password,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
 
-    this.authService.tryLogin(body, headers)
+    this.authService.tryLogin(body)
       .subscribe((response) => {
         if(response != null){
           console.log(response.url);

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthFailedComponent } from './auth-failed.component';
+// import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('AuthFailedComponent', () => {
   let component: AuthFailedComponent;
@@ -8,7 +9,8 @@ describe('AuthFailedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AuthFailedComponent]
+      declarations: [AuthFailedComponent],
+      // imports: [HttpClientTestingModule],
     })
     .compileComponents();
 

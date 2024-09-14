@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-
 :root {
     --background-color: #ffffff;
     --primary-color: #1976d2;
@@ -9,48 +8,51 @@
     --link-color: #1976d2;
     --border-color: #e0e0e0;
 }
-
-*{
+* {
     box-sizing: border-box;
 }
-body{
+body {
     margin: 0;
     padding: 0;
     font-family: "Roboto", sans-serif;
     font-size: 20px;
 }
-a{
+a {
     text-decoration: none;
 }
-h1{
+h1 {
     font-weight: bold;
 }
-.main{
+.main {
     padding: 20px;
     margin-top: auto;
-    /* width: 50%; */
+    min-height: calc(100vh - 332px);
 }
-.space{
+.space {
     height: 40px;
 }
-.center{
+.center {
     margin: auto;
-    width: 60%;;
+    width: 60%;
     padding: 10px;
 }
-.custom-button{
+.custom-button {
     margin-top: 20px;
     margin-bottom: 20px;
     min-width: 158px;
 }
-
 /* Input Field */
 .example-form {
     min-width: 150px;
     /* max-width: 500px; */
     width: 100%;
-  }
-  
-  .example-full-width {
+}
+.example-full-width {
     width: 100%;
-  }
+}
+
+@media only screen and (max-width: 600px) {
+    .custom-button {
+        width: 100%;
+    }
+}

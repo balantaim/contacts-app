@@ -10,7 +10,7 @@
 
 ### Other software
 
-- PostgreSQL 16, git, Docker, Postman
+- PostgreSQL 16, git, Docker, Postman, Material Design 3 
 
 ### Basic information
 

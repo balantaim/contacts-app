@@ -1,31 +1,32 @@
 <header>
     <div class="container">
         <div class="big-text has-text-centered is-centered has-text-weight-bold">
-            <a href="#" routerLink="/">Contacts Application</a>
+            <a href="#" routerLink="/" *ngIf="!getAuthenticatedStatus()">Contacts Application</a>
+            <p *ngIf="getAuthenticatedStatus()">Contacts Application</p>
         </div>
         <nav class="is-justify-content-space-around">
 
             <div class="level">
                 <div class="level-item has-text-centered" *ngIf="!getAuthenticatedStatus()">
-                    <a href="#" routerLink="/" class="is-inline-block">Login</a>
+                    <a href="#" routerLink="/" class="is-inline-block p-1">Login</a>
                 </div>
                 <div class="level-item has-text-centered" *ngIf="getAuthenticatedStatus()">
-                    <a href="#" routerLink="/contacts" class="is-inline-block">Contacts</a>
+                    <a href="#" routerLink="/contacts" class="is-inline-block p-1">Contacts</a>
                 </div>
                 <div class="level-item has-text-centered" *ngIf="getAuthenticatedStatus()">
-                    <a href="#" routerLink="/add" class="is-inline-block">Add Contact</a>
+                    <a href="#" routerLink="/add" class="is-inline-block p-1">Add Contact</a>
                 </div>
                 <div class="level-item has-text-centered" *ngIf="getAuthenticatedStatus()">
-                    <a href="#" routerLink="/update" class="is-inline-block">Update Contact</a>
+                    <a href="#" routerLink="/update" class="is-inline-block p-1">Update Contact</a>
                 </div>
                 <div class="level-item has-text-centered" *ngIf="getAuthenticatedStatus()">
-                    <a href="#" routerLink="/delete" class="is-inline-block">Delete Contact</a>
+                    <a href="#" routerLink="/delete" class="is-inline-block p-1">Delete Contact</a>
                 </div>
                 <div class="level-item has-text-centered">
-                    <a href="http://localhost:5000/swagger-ui" target='_blank' class="is-inline-block">Swagger</a>
+                    <a href="http://localhost:5000/swagger-ui" target='_blank' class="is-inline-block p-1">Swagger</a>
                 </div>
                 <div class="level-item has-text-centered" style="cursor: pointer;" (click)="userExit()" *ngIf="getAuthenticatedStatus()">
-                    <p class="is-inline-block">Logout</p>
+                    <p class="is-inline-block p-1">Logout</p>
                 </div>
             </div>
 

@@ -8,15 +8,14 @@
 
       <div class="space"></div>
 
-      <p>Search by contact by ID</p>
+      <p class="mb-2">Search by contact by ID</p>
     
-      <!-- <input id="idValue" type="number" name="idValue" placeholder="ID number" [formControl]="idValue"> -->
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="example-full-width mb-4" appearance="outline">
         <mat-label>Contact ID</mat-label>
         <input matInput placeholder="Enter your contact ID" id="idValue" type="number" name="idValue" [formControl]="idValue" required min="1">
       </mat-form-field>
     
-      <div class="container get-by-id has-text-centered">
+      <div class="container get-by-id has-text-centered" appearance="outline">
         <button type="button" class="button is-success is-rounded custom-button" (click)="findContactById()" clickable>Find Contact by ID</button>
       </div>
     
@@ -36,11 +35,9 @@
     
       <hr>
     
-      <p>Search by keyword (Optional)</p>
-    
-      <!-- <input id="filterValue" type="text" name="filterValue" placeholder="Optional keyword" [formControl]="filterValue"> -->
+      <p class="mb-2">Search by keyword (Optional)</p>
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="example-full-width mb-4" appearance="outline">
         <mat-label>Keyword</mat-label>
         <input matInput placeholder="Optional keyword" type="text" id="filterValue" name="filterValue" [formControl]="filterValue">
       </mat-form-field>
@@ -49,13 +46,12 @@
         <button #btnFilter type="button" class="button is-success is-rounded custom-button" (click)="getAllContacts()" clickable>Find All Contacts</button>
       </div>
     
-      
       <div *ngIf="contacts.length > 0" class="container get-all">
     
         <mat-card appearance="outlined" style="padding: 6px;">
           @for (contact of contacts; track contact.id) {
     
-          <mat-card appearance="outlined" style="padding: 6px;">
+          <mat-card appearance="outlined" style="padding: 6px;" class="mt-1 mb-1">
             <mat-card-header>
               <mat-card-title>{{contact.firstName}} {{contact.lastName}}</mat-card-title>
               <mat-card-subtitle>ID: {{contact.id}}, 

@@ -9,10 +9,15 @@
 
       <div class="space"></div>
 
-      <!-- <input id="filterValue" type="number" name="filterValue" placeholder="contact ID" [formControl]="idValue"> -->
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="example-full-width mb-4" appearance="outline">
         <mat-label>Contact ID</mat-label>
-        <input matInput placeholder="Enter your contact ID" id="filterValue" type="number" name="filterValue" [formControl]="idValue" required min="1">
+        <input matInput placeholder="Enter your contact ID" id="filterValue" type="number" name="filterValue" [formControl]="idValue" required min="1"
+        [class.invalid]="!isValidInput()">
+
+        <mat-error
+        *ngIf="isValidInput()"
+        class="has-text-danger" style="margin-bottom: 20px;">Required valid ID!
+        </mat-error>
       </mat-form-field>
     
       <div class="delete-data has-text-centered">

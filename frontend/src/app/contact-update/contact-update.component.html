@@ -10,45 +10,69 @@
       <div class="space"></div>
 
       <form [formGroup]="updateForm" (ngSubmit)="updateContact()" class="example-form">
-          <div>
-            <!-- <input id="id" type="number" placeholder="contact ID" name="id" formControlName="id" required /> -->
-            <mat-form-field class="example-full-width">
-              <mat-label>Contact ID</mat-label>
-              <input matInput placeholder="Enter your contact ID" id="id" type="number" name="id" formControlName="id" required min="1">
-            </mat-form-field>
-          </div>
-          <div>
-            <!-- <input id="firstName" type="text" placeholder="firstName" name="firstName" formControlName="firstName" required /> -->
-            <mat-form-field class="example-full-width">
-              <mat-label>First Name</mat-label>
-              <input matInput placeholder="Enter your first name" id="firstName" type="text" name="firstName" formControlName="firstName" required>
-            </mat-form-field>
-          </div>
-          <div>
-            <!-- <input id="lastName" type="text" placeholder="lastName" name="lastName" formControlName="lastName" required /> -->
-            <mat-form-field class="example-full-width">
-              <mat-label>Last Name</mat-label>
-              <input matInput placeholder="Enter your last name" id="lastName" type="text" name="lastName" formControlName="lastName" required>
-            </mat-form-field>
-          </div>
-          <div>
-            <!-- <input id="phoneNumber" type="text" placeholder="phoneNumber" name="phoneNumber" formControlName="phoneNumber" required /> -->
-            <mat-form-field class="example-full-width">
-              <mat-label>Phone Number</mat-label>
-              <input matInput placeholder="Enter your phone number" id="phoneNumber" type="text" name="phoneNumber" formControlName="phoneNumber" required>
-            </mat-form-field>
-          </div>
-          <div>
-            <!-- <input id="email" type="text" placeholder="email" name="email" formControlName="email" required /> -->
-            <mat-form-field class="example-full-width">
-              <mat-label>Email</mat-label>
-              <input matInput placeholder="Enter your email" id="email" type="email" name="email" formControlName="email" required>
-            </mat-form-field>
-          </div>
           
-          <div class="has-text-centered">
-            <button type="submit" class="button is-success is-rounded custom-button">Update Contact</button>
-          </div>
+        <mat-form-field class="example-full-width mb-4" appearance="outline">
+          <mat-label>Contact ID</mat-label>
+          <input matInput placeholder="Enter your contact ID" id="id" type="number" name="id" formControlName="id" required min="1"
+          [class.invalid]="updateForm.get('id')?.invalid && updateForm.get('id')?.dirty || updateForm.get('id')?.touched">
+
+          <mat-error
+          *ngIf="updateForm.get('id')?.hasError('required') && updateForm.get('id')?.dirty || updateForm.get('id')?.touched"
+          class="has-text-danger" style="margin-bottom: 20px;">Required valid ID!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width mb-4" appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="Enter your first name" id="firstName" type="text" name="firstName"
+          [class.invalid]="updateForm.get('firstName')?.invalid && updateForm.get('firstName')?.dirty || updateForm.get('firstName')?.touched" 
+          formControlName="firstName" required>
+
+          <mat-error
+          *ngIf="updateForm.get('firstName')?.hasError('required') && updateForm.get('firstName')?.dirty || updateForm.get('firstName')?.touched"
+          class="has-text-danger" style="margin-bottom: 20px;">Required valid first name with characters between 3 and 50!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width mb-4" appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Enter your last name" id="lastName" type="text" name="lastName" 
+          [class.invalid]="updateForm.get('lastName')?.invalid && updateForm.get('lastName')?.dirty || updateForm.get('lastName')?.touched" 
+          formControlName="lastName" required>
+
+          <mat-error
+          *ngIf="updateForm.get('lastName')?.hasError('required') && updateForm.get('lastName')?.dirty || updateForm.get('lastName')?.touched"
+          class="has-text-danger" style="margin-bottom: 20px;">Required valid last name with characters between 3 and 50!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width mb-4" appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input matInput placeholder="Enter your phone number" id="phoneNumber" type="text" name="phoneNumber" 
+          [class.invalid]="updateForm.get('phoneNumber')?.invalid && updateForm.get('phoneNumber')?.dirty || updateForm.get('phoneNumber')?.touched" 
+          formControlName="phoneNumber" required>
+
+          <mat-error
+          *ngIf="updateForm.get('phoneNumber')?.hasError('required') && updateForm.get('phoneNumber')?.dirty || updateForm.get('phoneNumber')?.touched"
+          class="has-text-danger" style="margin-bottom: 20px;">Required valid phone number!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width mb-4" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Enter your email" id="email" type="email" name="email" 
+          [class.invalid]="updateForm.get('email')?.invalid && updateForm.get('email')?.dirty || updateForm.get('email')?.touched" 
+          formControlName="email" required>
+
+          <mat-error
+          *ngIf="updateForm.get('email')?.hasError('required') && updateForm.get('email')?.dirty || updateForm.get('email')?.touched"
+          class="has-text-danger" style="margin-bottom: 20px;">Required valid email!
+          </mat-error>
+        </mat-form-field>
+          
+        <div class="has-text-centered">
+          <button type="submit" class="button is-success is-rounded custom-button" [disabled]="updateForm.invalid">Update Contact</button>
+        </div>
       
         </form>
 

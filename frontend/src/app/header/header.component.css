@@ -1,5 +1,13 @@
 *{
-    color: indigo;
+    color: #404654;
+}
+.is-inline-block{
+    transition: none;
+}
+.is-inline-block:hover{
+    background-color: #48c78e;
+    border: #48c78e 2px;
+    border-radius: 24px;
 }
 .center {
     text-align: center;

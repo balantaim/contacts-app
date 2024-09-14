@@ -10,37 +10,57 @@
       <div class="space"></div>
 
       <form [formGroup]="addForm" (ngSubmit)="createContact()">
-        <div>
-          <!-- <input id="firstName" type="text" placeholder="firstName" name="firstName" formControlName="firstName" required /> -->
-          <mat-form-field class="example-full-width">
-            <mat-label>First Name</mat-label>
-            <input matInput placeholder="Enter your first name" id="firstName" type="text" name="firstName" formControlName="firstName" required>
-          </mat-form-field>
-        </div>
-        <div>
-          <!-- <input id="lastName" type="text" placeholder="lastName" name="lastName" formControlName="lastName" required /> -->
-          <mat-form-field class="example-full-width">
-            <mat-label>Last Name</mat-label>
-            <input matInput placeholder="Enter your last name" id="lastName" type="text" name="lastName" formControlName="lastName" required>
-          </mat-form-field>
-        </div>
-        <div>
-          <!-- <input id="phoneNumber" type="text" placeholder="phoneNumber" name="phoneNumber" formControlName="phoneNumber" required /> -->
-          <mat-form-field class="example-full-width">
-            <mat-label>Phone Number</mat-label>
-            <input matInput placeholder="Enter your phone number" id="phoneNumber" type="text" name="phoneNumber" formControlName="phoneNumber" required>
-          </mat-form-field>
-        </div>
-        <div>
-          <!-- <input id="email" type="text" placeholder="email" name="email" formControlName="email" required /> -->
-          <mat-form-field class="example-full-width">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="Enter your email" id="email" type="email" name="email" formControlName="email" required>
-          </mat-form-field>
-        </div>
+        
+        <mat-form-field class="example-full-width mb-4" appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="Enter your first name" id="firstName" type="text" name="firstName"
+          [class.invalid]="addForm.get('firstName')?.invalid && addForm.get('firstName')?.dirty || addForm.get('firstName')?.touched" 
+          formControlName="firstName" required>
+
+          <mat-error
+          *ngIf="addForm.get('firstName')?.hasError('required') && addForm.get('firstName')?.dirty || addForm.get('firstName')?.touched"
+          class="has-text-danger" style="margin-bottom: 20px;">Required valid first name with characters between 3 and 50!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width mb-4" appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Enter your last name" id="lastName" type="text" name="lastName" 
+          [class.invalid]="addForm.get('lastName')?.invalid && addForm.get('lastName')?.dirty || addForm.get('lastName')?.touched" 
+          formControlName="lastName" required>
+
+          <mat-error
+          *ngIf="addForm.get('lastName')?.hasError('required') && addForm.get('lastName')?.dirty || addForm.get('lastName')?.touched"
+          class="has-text-danger" style="margin-bottom: 20px;">Required valid last name with characters between 3 and 50!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width mb-4" appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input matInput placeholder="Enter your phone number" id="phoneNumber" type="text" name="phoneNumber" 
+          [class.invalid]="addForm.get('phoneNumber')?.invalid && addForm.get('phoneNumber')?.dirty || addForm.get('phoneNumber')?.touched" 
+          formControlName="phoneNumber" required>
+
+          <mat-error
+          *ngIf="addForm.get('phoneNumber')?.hasError('required') && addForm.get('phoneNumber')?.dirty || addForm.get('phoneNumber')?.touched"
+          class="has-text-danger" style="margin-bottom: 20px;">Required valid phone number!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width mb-4" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Enter your email" id="email" type="email" name="email" 
+          [class.invalid]="addForm.get('email')?.invalid && addForm.get('email')?.dirty || addForm.get('email')?.touched" 
+          formControlName="email" required>
+
+          <mat-error
+          *ngIf="addForm.get('email')?.hasError('required') && addForm.get('email')?.dirty || addForm.get('email')?.touched"
+          class="has-text-danger" style="margin-bottom: 20px;">Required valid email!
+          </mat-error>
+        </mat-form-field>
 
         <div class="has-text-centered">
-          <button type="submit" class="button is-success is-rounded custom-button">Add Contact</button>
+          <button type="submit" class="button is-success is-rounded custom-button" [disabled]="addForm.invalid">Add Contact</button>
         </div>
 
       </form>

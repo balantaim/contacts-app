@@ -118,3 +118,4 @@ docker-compose up --build
 ![Preview application](images/10.PNG)
 ![Preview application](images/11.PNG)
 ![Preview application](images/12.PNG)
+![Preview application](images/13.PNG)

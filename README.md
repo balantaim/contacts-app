@@ -68,7 +68,7 @@ ng test
 
 ### Build application with specific environment configuration (development, production)
 
-ng build --configuration development
+ng build --configuration production
 
 ## Gradle basic commands
 

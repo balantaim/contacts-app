@@ -46,6 +46,10 @@ ng generate guard auth
 
 ng generate environments
 
+### Install toast messages
+
+npm install ngx-toastr --save
+
 ### Add Angular material theme (Optional)
 
 ng add @angular/material
@@ -99,3 +103,18 @@ cd ./backend
 cd ..
 
 docker-compose up --build
+
+### Contacts App Preview
+
+![Preview application](images/1.PNG)
+![Preview application](images/2.PNG)
+![Preview application](images/3.PNG)
+![Preview application](images/4.PNG)
+![Preview application](images/5.PNG)
+![Preview application](images/6.PNG)
+![Preview application](images/7.PNG)
+![Preview application](images/8.PNG)
+![Preview application](images/9.PNG)
+![Preview application](images/10.PNG)
+![Preview application](images/11.PNG)
+![Preview application](images/12.PNG)

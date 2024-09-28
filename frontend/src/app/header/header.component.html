@@ -1,11 +1,12 @@
 <header>
+
     <div class="container">
         <div class="big-text has-text-centered is-centered has-text-weight-bold">
             <a href="#" routerLink="/" *ngIf="!getAuthenticatedStatus()">Contacts Application</a>
             <p *ngIf="getAuthenticatedStatus()">Contacts Application</p>
         </div>
-        <nav class="is-justify-content-space-around">
 
+        <nav class="is-justify-content-space-around">
             <div class="level">
                 <div class="level-item has-text-centered" *ngIf="!getAuthenticatedStatus()">
                     <a href="#" routerLink="/" class="is-inline-block p-1">Login</a>
@@ -29,9 +30,8 @@
                     <p class="is-inline-block p-1">Logout</p>
                 </div>
             </div>
-
-            <hr>
-
         </nav>
     </div>
+
+    <hr>
 </header>

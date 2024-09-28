@@ -25,6 +25,7 @@
         <mat-form-field class="example-full-width mb-4" appearance="outline">
           <mat-label>First Name</mat-label>
           <input matInput placeholder="Enter your first name" id="firstName" type="text" name="firstName"
+          (keydown.space)="$event.preventDefault();"
           [class.invalid]="updateForm.get('firstName')?.invalid && updateForm.get('firstName')?.dirty || updateForm.get('firstName')?.touched" 
           formControlName="firstName" required>
 
@@ -37,6 +38,7 @@
         <mat-form-field class="example-full-width mb-4" appearance="outline">
           <mat-label>Last Name</mat-label>
           <input matInput placeholder="Enter your last name" id="lastName" type="text" name="lastName" 
+          (keydown.space)="$event.preventDefault();"
           [class.invalid]="updateForm.get('lastName')?.invalid && updateForm.get('lastName')?.dirty || updateForm.get('lastName')?.touched" 
           formControlName="lastName" required>
 
@@ -69,6 +71,10 @@
           class="has-text-danger" style="margin-bottom: 20px;">Required valid email!
           </mat-error>
         </mat-form-field>
+
+        <div class="has-text-centered">
+          <button class="button is-success is-rounded custom-button" (click)="clearData()">Clear</button>
+        </div>
           
         <div class="has-text-centered">
           <button type="submit" class="button is-success is-rounded custom-button" [disabled]="updateForm.invalid">Update Contact</button>

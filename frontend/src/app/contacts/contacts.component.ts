@@ -3,13 +3,15 @@ import { Component } from '@angular/core';
 import { Contact } from '../value-object/contact';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 //Import for *ngIf
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../service/contact.service';
+import { ToastrService } from 'ngx-toastr';
+import { SharedContactService } from '../shared/shared-contact.service';
 //import { NgForm } from '@angular/forms';
-//import { MatButtonModule } from '@angular/material/button';
 //import { MatIconModule } from '@angular/material/icon';
 //import { MatDividerModule } from '@angular/material/divider';
 //import { Component, EventEmitter, Input, ViewChild, Output } from '@angular/core';
@@ -21,13 +23,11 @@ import { ContactService } from '../service/contact.service';
   styleUrl: './contacts.component.css',
 
   standalone: true,
-  imports: [MatCardModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, CommonModule]
+  imports: [MatCardModule, MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, CommonModule, MatButtonModule]
   //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactsComponent {
   title = 'contacts';
-
-  //@Input() defaultContact: Contact = new Contact(0, '', '', '', '');
 
   contacts: Contact[] = [];
 
@@ -36,11 +36,11 @@ export class ContactsComponent {
   filterValue = new FormControl('');
   idValue = new FormControl('');
 
-  constructor(private contactService: ContactService) { }
+  constructor(private contactService: ContactService, private toastr: ToastrService, private sharedContact: SharedContactService) { }
 
   findContactById(): void {
     if (this.idValue.value == '' || this.idValue.value == null) {
-      alert('Enter valid ID number!');
+      this.toastr.error('Enter valid ID number!');
       return;
     }
 
@@ -73,10 +73,13 @@ export class ContactsComponent {
     }
 
     this.contactService.getContacts(filter)
-      .subscribe(data =>
-        this.contacts = data
+      .subscribe(data => {
+        this.contacts = data;
+        if(data.length == 0 && filter.length > 0){
+          this.toastr.info('There are no contacts with this keyword');
+        }
         //console.log(data)
-      );
+      });
 
     // let url: string = 'http://localhost:5000';
 
@@ -93,6 +96,23 @@ export class ContactsComponent {
     //   this.contacts = data
     //   //console.log(data)
     // );
+  }
+
+  haveErrorFieldId(): boolean{
+    if(this.idValue.value == '' || this.idValue.value == null || Number.parseInt(this.idValue.value) < 1){
+      return true;
+    }
+    return false;
+  }
+
+  copyContact(index: number): void {
+    this.sharedContact.setContact(this.contacts[index]);
+    this.toastr.info(`Contact with ID ${this.contacts[index].id} copied!`);
+  }
+
+  copyContactById(): void {
+    this.sharedContact.setContact(this.contactById);
+    this.toastr.info(`Contact with ID ${this.contactById.id} copied!`);
   }
 
 }

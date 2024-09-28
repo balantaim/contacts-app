@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Contact } from '../value-object/contact';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ContactService } from '../service/contact.service';
@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //Import for *ngIf
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import { SharedContactService } from '../shared/shared-contact.service';
 
 @Component({
   selector: 'app-contact-add',
@@ -18,18 +20,21 @@ import { CommonModule } from '@angular/common';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatInputModule,
     CommonModule,
     FormsModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactAddComponent {
+export class ContactAddComponent implements OnInit {
+  title = 'contact-add';
 
   constructor(
     private contactService: ContactService,
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private sharedContact: SharedContactService,
   ) {
     this.addForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
@@ -41,17 +46,28 @@ export class ContactAddComponent {
 
   addForm: FormGroup;
 
+  ngOnInit(): void {
+    this.addForm.controls['firstName'].setValue(this.sharedContact.getContactFirstName());
+    this.addForm.controls['lastName'].setValue(this.sharedContact.getContactLastName());
+    this.addForm.controls['phoneNumber'].setValue(this.sharedContact.getContactPhoneNumber());
+    this.addForm.controls['email'].setValue(this.sharedContact.getContactEmail());
+  }
+
   createContact(): void {
 
     //Create new contact
     const formValues = this.addForm.value;
     const contact = new Contact(0, formValues.firstName, formValues.lastName, formValues.phoneNumber, formValues.email);
 
-    if(this.addForm.valid){
+    if (this.addForm.valid) {
       this.contactService.createContact(contact)
-      .subscribe(data => {
-        alert(data ? 'Contact created!':'Something went wrong!')
-      });
+        .subscribe(data => {
+          if (data) {
+            this.toastr.success('Contact created!');
+          } else {
+            this.toastr.error('Invalid input data!');
+          }
+        });
     }
 
 
@@ -70,6 +86,14 @@ export class ContactAddComponent {
     //     alert('Invalid data!');
     //   }
     // );
+  }
+
+  clearData() {
+    this.addForm.get('firstName')?.reset();
+    this.addForm.get('lastName')?.reset();
+    this.addForm.get('phoneNumber')?.reset();
+    this.addForm.get('email')?.reset();
+    this.sharedContact.resetContact();
   }
 
 }

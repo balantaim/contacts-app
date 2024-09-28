@@ -8,6 +8,9 @@ import { FooterComponent } from './footer/footer.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http'
 
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 //import { LoginformComponent } from './loginform/loginform.component';
 //import { CookieService } from 'ngx-cookie-service';
 //import { ContactAddComponent } from './contact-add/contact-add.component';
@@ -38,6 +41,12 @@ import { provideHttpClient } from '@angular/common/http'
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right',
+      progressBar: true,
+      progressAnimation: 'increasing',
+    }),
     // FormsModule,
     // ReactiveFormsModule,
     // MatFormFieldModule, 

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Contact } from '../value-object/contact';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ContactService } from '../service/contact.service';
@@ -6,8 +6,10 @@ import { ContactService } from '../service/contact.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedContactService } from '../shared/shared-contact.service';
 //Import for *ngIf
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contact-update',
@@ -25,12 +27,14 @@ import { CommonModule } from '@angular/common';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactUpdateComponent {
+export class ContactUpdateComponent implements OnInit {
   title = 'contact-update';
 
   constructor(
     private fb: FormBuilder,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private toastr: ToastrService,
+    private sharedContact: SharedContactService,
   ) {
     this.updateForm = this.fb.group({
       id: [0, Validators.required],
@@ -43,6 +47,16 @@ export class ContactUpdateComponent {
 
   updateForm: FormGroup;
 
+  ngOnInit(): void {
+    if(this.sharedContact.getContactId() >= 1){
+      this.updateForm.controls['id'].setValue(this.sharedContact.getContactId());
+    }
+    this.updateForm.controls['firstName'].setValue(this.sharedContact.getContactFirstName());
+    this.updateForm.controls['lastName'].setValue(this.sharedContact.getContactLastName());
+    this.updateForm.controls['phoneNumber'].setValue(this.sharedContact.getContactPhoneNumber());
+    this.updateForm.controls['email'].setValue(this.sharedContact.getContactEmail());
+  }
+
   updateContact(): void {
     const formValues = this.updateForm.value;
     const contact = new Contact(formValues.id, formValues.firstName, formValues.lastName, formValues.phoneNumber, formValues.email);
@@ -50,7 +64,11 @@ export class ContactUpdateComponent {
     if(this.updateForm.valid){
       this.contactService.updateContact(contact)
       .subscribe((data) => {
-        alert(data ? 'Contact updated!':'Something went wrong!');
+        if(data){
+          this.toastr.success('Contact updated!');
+        }else{
+          this.toastr.error('Contact with current ID not found!');
+        }
       });
     }
 
@@ -68,6 +86,14 @@ export class ContactUpdateComponent {
     // (error) => {
     //   alert('Invalid data');
     // });
+  }
+
+  clearData(){
+    this.updateForm.get('firstName')?.reset();
+    this.updateForm.get('lastName')?.reset();
+    this.updateForm.get('phoneNumber')?.reset();
+    this.updateForm.get('email')?.reset();
+    this.sharedContact.resetContact();
   }
 
 }

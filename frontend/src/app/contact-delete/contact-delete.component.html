@@ -15,7 +15,7 @@
         [class.invalid]="!isValidInput()">
 
         <mat-error
-        *ngIf="isValidInput()"
+        *ngIf="!isValidInput()"
         class="has-text-danger" style="margin-bottom: 20px;">Required valid ID!
         </mat-error>
       </mat-form-field>

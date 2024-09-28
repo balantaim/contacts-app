@@ -30,8 +30,8 @@ export class LoginformComponent {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
+    private router: Router,
     //private cookieService: CookieService,
-    private router: Router
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],

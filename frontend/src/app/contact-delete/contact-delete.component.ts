@@ -1,13 +1,14 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ContactService } from '../service/contact.service';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedContactService } from '../shared/shared-contact.service';
 //Import for *ngIf
 import { CommonModule } from '@angular/common';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contact-delete',
@@ -18,36 +19,46 @@ import { CommonModule } from '@angular/common';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatInputModule,
     CommonModule,
     FormsModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactDeleteComponent {
+export class ContactDeleteComponent implements OnInit {
   title = 'contact-delete';
 
-  constructor(private contactService: ContactService) {}
+  constructor(private contactService: ContactService, private toastr: ToastrService, private sharedContact: SharedContactService) { }
 
   idValue = new FormControl(0);
 
-  isValidInput(): boolean{
-    if(this.idValue.value == undefined || this.idValue.value == null || this.idValue.value < 1){
-      return false
+  ngOnInit(): void {
+    if(this.sharedContact.getContactId() >= 1){
+      this.idValue.setValue(this.sharedContact.getContactId());
+    }
+  }
+
+  isValidInput(): boolean {
+    if (this.idValue.value == undefined || this.idValue.value == null || this.idValue.value < 1) {
+      return false;
     }
     return true;
   }
 
   deleteContact(): void {
-    if(this.idValue.value == undefined || this.idValue.value == null || this.idValue.value === 0){
-      alert('Invalid ID!');
+    if (this.idValue.value == undefined || this.idValue.value == null || this.idValue.value == 0) {
+      this.toastr.error('Invalid ID!');
       return;
     }
 
     this.contactService.deleteContact(this.idValue.value)
-    .subscribe((data) => {
-      alert(data ? 'Contact deleted!':'Something went wrong!');
+      .subscribe((data) => {
+        if (data) {
+          this.toastr.success('Contact deleted!');
+        } else {
+          this.toastr.error('No contact with current ID!');
+        }
       });
 
     // this.http.delete(

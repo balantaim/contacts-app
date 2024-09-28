@@ -2,7 +2,7 @@
 
 ### Frontend
 
-- Angular 18, Nodejs 20, TypeScript
+- Angular 18, Nodejs 20, TypeScript, Material Design 3, ngx-toastr
 
 ### Backend
 
@@ -10,7 +10,7 @@
 
 ### Other software
 
-- PostgreSQL 16, git, Docker, Postman, Material Design 3 
+- PostgreSQL 16, git, Docker, Postman
 
 ### Basic information
 

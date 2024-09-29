@@ -2,14 +2,13 @@ import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Contact } from '../value-object/contact';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ContactService } from '../service/contact.service';
-
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedContactService } from '../shared/shared-contact.service';
 //Import for *ngIf
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-import { SharedContactService } from '../shared/shared-contact.service';
 
 @Component({
   selector: 'app-contact-add',
@@ -69,23 +68,6 @@ export class ContactAddComponent implements OnInit {
           }
         });
     }
-
-
-    // this.http.post<any>(
-    //   "http://localhost:5000/add", contact,
-    //   {
-    //     observe: 'response', withCredentials: true
-    //   }
-    // ).subscribe(data =>
-    //   {
-    //     if(data.ok){
-    //       alert('Contact created!');
-    //     }
-    //   },
-    //   (error) => {
-    //     alert('Invalid data!');
-    //   }
-    // );
   }
 
   clearData() {

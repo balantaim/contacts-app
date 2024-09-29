@@ -1,7 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ContactService } from '../service/contact.service';
-
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,7 +33,7 @@ export class ContactDeleteComponent implements OnInit {
   idValue = new FormControl(0);
 
   ngOnInit(): void {
-    if(this.sharedContact.getContactId() >= 1){
+    if (this.sharedContact.getContactId() >= 1) {
       this.idValue.setValue(this.sharedContact.getContactId());
     }
   }
@@ -60,19 +59,6 @@ export class ContactDeleteComponent implements OnInit {
           this.toastr.error('No contact with current ID!');
         }
       });
-
-    // this.http.delete(
-    //   'http://localhost:5000/delete/' + this.idValue.value, 
-    //   {observe: 'response', withCredentials: true}
-    // ).subscribe((data) => {
-    //   if(data.ok){
-    //     alert('Contact deleted!');
-    //   }
-    // }, 
-    // (error) => {
-    //   alert('Contact not found!');
-    // }
-    // );
   }
 
 }

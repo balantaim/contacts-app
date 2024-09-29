@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   // The canActivate method determines whether a route can be activated
   canActivate(): Observable<boolean> {
@@ -24,6 +24,7 @@ export class AuthGuard implements CanActivate {
       })
     );
   }
+  
 }
 
 // import { CanActivateFn } from '@angular/router';

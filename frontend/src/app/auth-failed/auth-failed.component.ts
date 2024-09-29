@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AuthFailedComponent implements OnInit {
 
-  constructor(private toastr: ToastrService) {}
+  constructor(private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.toastr.error('Authentication failed!', 'Login process');

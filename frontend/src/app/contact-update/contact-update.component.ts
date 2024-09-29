@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Contact } from '../value-object/contact';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ContactService } from '../service/contact.service';
-
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +19,7 @@ import { ToastrService } from 'ngx-toastr';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatInputModule,
     CommonModule,
     FormsModule,
@@ -48,7 +47,7 @@ export class ContactUpdateComponent implements OnInit {
   updateForm: FormGroup;
 
   ngOnInit(): void {
-    if(this.sharedContact.getContactId() >= 1){
+    if (this.sharedContact.getContactId() >= 1) {
       this.updateForm.controls['id'].setValue(this.sharedContact.getContactId());
     }
     this.updateForm.controls['firstName'].setValue(this.sharedContact.getContactFirstName());
@@ -61,34 +60,19 @@ export class ContactUpdateComponent implements OnInit {
     const formValues = this.updateForm.value;
     const contact = new Contact(formValues.id, formValues.firstName, formValues.lastName, formValues.phoneNumber, formValues.email);
 
-    if(this.updateForm.valid){
+    if (this.updateForm.valid) {
       this.contactService.updateContact(contact)
-      .subscribe((data) => {
-        if(data){
-          this.toastr.success('Contact updated!');
-        }else{
-          this.toastr.error('Contact with current ID not found!');
-        }
-      });
+        .subscribe((data) => {
+          if (data) {
+            this.toastr.success('Contact updated!');
+          } else {
+            this.toastr.error('Contact with current ID not found!');
+          }
+        });
     }
-
-    // this.http.put<any>(
-    //   "http://localhost:5000/update", 
-    //   contact,
-    //   {
-    //     observe: 'response', withCredentials: true
-    //   }
-    // ).subscribe((data) => {
-    //   //this.contacts = data
-    //   console.log(data);
-    //   alert('Contact updated!');
-    // },
-    // (error) => {
-    //   alert('Invalid data');
-    // });
   }
 
-  clearData(){
+  clearData() {
     this.updateForm.get('firstName')?.reset();
     this.updateForm.get('lastName')?.reset();
     this.updateForm.get('phoneNumber')?.reset();

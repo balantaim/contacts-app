@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 //Import for *ngIf
 //import { CommonModule } from '@angular/common';
 
@@ -10,23 +11,23 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  constructor(private authService: AuthService, private router: Router){}
+  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService) { }
 
-  getAuthenticatedStatus(): boolean{
+  getAuthenticatedStatus(): boolean {
     return this.authService.isLogged;
   }
 
-  userExit(): void{
+  userExit(): void {
     this.authService.logout()
-    .subscribe((response) => {
-      console.log(response);
-      if (response.ok) {
-        //alert('You are loged out!');
-        this.authService.isLogged = false;
-        this.router.navigate(['']);
-      } else {
-        //alert('Someting goes wrong!');
-      }
-    });
+      .subscribe((response) => {
+        console.log(response);
+        if (response.ok) {
+          this.authService.isLogged = false;
+          this.router.navigate(['']);
+        } else {
+          this.toastr.error('Someting goes wrong!');
+        }
+      });
   }
+
 }

@@ -17,7 +17,7 @@ export class SharedContactService {
   }
 
   getContactId(): number {
-    if(this.sharedContact.id){
+    if (this.sharedContact.id) {
       return this.sharedContact.id;
     }
     return -1;

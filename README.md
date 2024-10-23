@@ -54,7 +54,10 @@ npm install ngx-toastr --save
 
 npm install --save ngx-logger
 
-### Install loading spinner (Current supported version is Angular 17. Keep in mind that some features may not work!)
+### Install loading spinner
+
+> [!WARNING]
+> Current supported version is Angular 17. Keep in mind that some features may not work!
 
 npm install ngx-spinner --save
 

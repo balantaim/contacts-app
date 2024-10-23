@@ -112,7 +112,7 @@ cd ..
 
 docker-compose up --build
 
-### Contacts App Preview
+## Contacts App Preview
 
 ![Preview application](images/1.PNG)
 ![Preview application](images/2.PNG)

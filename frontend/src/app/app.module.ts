@@ -8,6 +8,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient } from '@angular/common/http'
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// For logger
+import { LoggerModule } from "ngx-logger";
+import { environment } from '../environments/environment';
+// Spinner
+import { NgxSpinnerModule } from "ngx-spinner";
 // import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
@@ -25,6 +30,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       progressBar: true,
       progressAnimation: 'increasing',
     }),
+    LoggerModule.forRoot(environment.logging),
+    NgxSpinnerModule,
   ],
   providers: [
     provideAnimationsAsync(),

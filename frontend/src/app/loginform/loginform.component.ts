@@ -9,6 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 //Import for *ngIf
 import { CommonModule } from '@angular/common';
+//Logger
+import { NGXLogger } from "ngx-logger";
+//Spinner
+import { NgxSpinnerService } from "ngx-spinner";
 //import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -30,6 +34,8 @@ export class LoginformComponent {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
+    private logger: NGXLogger,
+    private spinner: NgxSpinnerService,
     //private cookieService: CookieService,
   ) {
     this.loginForm = this.fb.group({
@@ -46,6 +52,8 @@ export class LoginformComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
+      //Show loading spinner
+      this.spinner.show();
       const formValues = this.loginForm.value;
 
       const body = {
@@ -56,13 +64,16 @@ export class LoginformComponent {
       this.authService.tryLogin(body)
         .subscribe((response) => {
           if (response != null) {
-            console.log(response.url);
             if (response.status === 200 && response.url !== "http://localhost:5000/login/authFailed") {
+              this.logger.info('Success login!');
               this.router.navigate(['contacts']);
             } else {
+              this.logger.error('Error: Authorisation failed!');
               this.router.navigate(['authFailed']);
             }
           }
+          //Hide loading spinner
+          this.spinner.hide();
         });
     }
 

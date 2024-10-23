@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { ContactService } from '../service/contact.service';
 import { ToastrService } from 'ngx-toastr';
 import { SharedContactService } from '../shared/shared-contact.service';
+//Logger
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-contacts',
@@ -30,10 +32,14 @@ export class ContactsComponent {
   filterValue = new FormControl('');
   idValue = new FormControl('');
 
-  constructor(private contactService: ContactService, private toastr: ToastrService, private sharedContact: SharedContactService) { }
+  constructor(private contactService: ContactService, 
+    private toastr: ToastrService, 
+    private sharedContact: SharedContactService,
+    private logger: NGXLogger) { }
 
   findContactById(): void {
     if (this.idValue.value == '' || this.idValue.value == null) {
+      this.logger.error('Invalid ID value!');
       this.toastr.error('Enter valid ID number!');
       return;
     }
@@ -56,7 +62,8 @@ export class ContactsComponent {
       .subscribe(data => {
         this.contacts = data;
         if (data.length == 0 && filter.length > 0) {
-          this.toastr.info('There are no contacts with this keyword');
+          this.logger.info('No contacts.');
+          this.toastr.info('There are no contacts with this keyword.');
         }
       });
   }

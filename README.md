@@ -50,6 +50,14 @@ ng generate environments
 
 npm install ngx-toastr --save
 
+### Install logger library
+
+npm install --save ngx-logger
+
+### Install loading spinner (Current supported version is Angular 17. Keep in mind that some features may not work!)
+
+npm install ngx-spinner --save
+
 ### Add Angular material theme (Optional)
 
 ng add @angular/material

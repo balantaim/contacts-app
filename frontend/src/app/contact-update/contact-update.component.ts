@@ -9,6 +9,8 @@ import { SharedContactService } from '../shared/shared-contact.service';
 //Import for *ngIf
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+//Logger
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-contact-update',
@@ -34,6 +36,7 @@ export class ContactUpdateComponent implements OnInit {
     private contactService: ContactService,
     private toastr: ToastrService,
     private sharedContact: SharedContactService,
+    private logger: NGXLogger,
   ) {
     this.updateForm = this.fb.group({
       id: [0, Validators.required],
@@ -64,8 +67,10 @@ export class ContactUpdateComponent implements OnInit {
       this.contactService.updateContact(contact)
         .subscribe((data) => {
           if (data) {
+            this.logger.info('Success update!');
             this.toastr.success('Contact updated!');
           } else {
+            this.logger.error('Error: Contact not found!');
             this.toastr.error('Contact with current ID not found!');
           }
         });

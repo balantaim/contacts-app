@@ -15,18 +15,20 @@
         <mat-form-field class="example-full-width mb-4" appearance="outline">
           <mat-label>Username</mat-label>
           <input matInput placeholder="Enter your Username" id="username" type="text" name="username"
+            autocomplete="username"
             [class.invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.dirty || loginForm.get('username')?.touched"
             formControlName="username" required>
           <mat-error
             *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.dirty || loginForm.get('username')?.touched"
-            class="has-text-danger" style="margin-bottom: 20px;">Required valid username with characters between 3 and 50!
+            class="has-text-danger" style="margin-bottom: 20px;">Required valid username with characters between 3 and
+            50!
           </mat-error>
         </mat-form-field>
 
         <mat-form-field class="example-full-width mb-4" appearance="outline">
           <mat-label>Password</mat-label>
           <input matInput [type]="hide() ? 'password' : 'text'" placeholder="Enter your Password" id="password"
-            type="password" name="password"
+            type="password" name="password" autocomplete="current-password"
             [class.invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.dirty || loginForm.get('password')?.touched"
             formControlName="password" required>
           <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
@@ -35,7 +37,8 @@
           </button>
           <mat-error
             *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.dirty || loginForm.get('password')?.touched"
-            class="has-text-danger alert" style="margin-bottom: 20px;">Required valid password with characters between 3 and 50!
+            class="has-text-danger alert" style="margin-bottom: 20px;">Required valid password with characters between 3
+            and 50!
           </mat-error>
         </mat-form-field>
 

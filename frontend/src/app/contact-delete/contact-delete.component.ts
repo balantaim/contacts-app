@@ -8,6 +8,8 @@ import { SharedContactService } from '../shared/shared-contact.service';
 //Import for *ngIf
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+//Logger
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-contact-delete',
@@ -28,7 +30,10 @@ import { ToastrService } from 'ngx-toastr';
 export class ContactDeleteComponent implements OnInit {
   title = 'contact-delete';
 
-  constructor(private contactService: ContactService, private toastr: ToastrService, private sharedContact: SharedContactService) { }
+  constructor(private contactService: ContactService, 
+    private toastr: ToastrService, 
+    private sharedContact: SharedContactService,
+    private logger: NGXLogger) { }
 
   idValue = new FormControl(0);
 
@@ -47,6 +52,7 @@ export class ContactDeleteComponent implements OnInit {
 
   deleteContact(): void {
     if (this.idValue.value == undefined || this.idValue.value == null || this.idValue.value == 0) {
+      this.logger.error('Wrong ID value!');
       this.toastr.error('Invalid ID!');
       return;
     }
@@ -54,8 +60,10 @@ export class ContactDeleteComponent implements OnInit {
     this.contactService.deleteContact(this.idValue.value)
       .subscribe((data) => {
         if (data) {
+          this.logger.info('Success delete!');
           this.toastr.success('Contact deleted!');
         } else {
+          this.logger.error('Error: Contact not found!');
           this.toastr.error('No contact with current ID!');
         }
       });

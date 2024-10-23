@@ -9,6 +9,8 @@ import { SharedContactService } from '../shared/shared-contact.service';
 //Import for *ngIf
 import { CommonModule } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+//Logger
+import { NGXLogger } from "ngx-logger";
 
 @Component({
   selector: 'app-contact-add',
@@ -34,6 +36,7 @@ export class ContactAddComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private sharedContact: SharedContactService,
+    private logger: NGXLogger,
   ) {
     this.addForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
@@ -62,8 +65,10 @@ export class ContactAddComponent implements OnInit {
       this.contactService.createContact(contact)
         .subscribe(data => {
           if (data) {
+            this.logger.info('Success create!');
             this.toastr.success('Contact created!');
           } else {
+            this.logger.info('Error: invalid input data!');
             this.toastr.error('Invalid input data!');
           }
         });

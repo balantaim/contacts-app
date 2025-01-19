@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
 import { Contact } from '../value-object/contact';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { NGXLogger } from "ngx-logger";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
+
   private url: string | undefined;
-  constructor(private http: HttpClient) {
+
+  constructor(
+    private http: HttpClient,
+    private logger: NGXLogger
+  ) {
     this.url = environment.apiUrl;
   }
 
@@ -34,7 +40,11 @@ export class ContactService {
     })
       .pipe(
         map(() => true),
-        catchError(this.handleError<boolean>('createContact', false))
+        catchError((error: HttpErrorResponse) => {
+          const errorMessage = error.message || error.statusText || 'Server not responding!';
+          this.logger.error('Error on call createContact: ', errorMessage);
+          return throwError(() => error);
+        })
       );
   }
 
@@ -46,7 +56,11 @@ export class ContactService {
     })
       .pipe(
         map(() => true),
-        catchError(this.handleError<boolean>('updateContact', false))
+        catchError((error: HttpErrorResponse) => {
+          const errorMessage = error.message || error.statusText || 'Server not responding!';
+          this.logger.error('Error on call updateContact: ', errorMessage);
+          return throwError(() => error);
+        })
       );
   }
 
@@ -58,14 +72,18 @@ export class ContactService {
     })
       .pipe(
         map(() => true),
-        catchError(this.handleError<boolean>('deleteContact', false))
+        catchError((error: HttpErrorResponse) => {
+          const errorMessage = error.message || error.statusText || 'Server not responding!';
+          this.logger.error('Error on call deleteContact: ', errorMessage);
+          return throwError(() => error);
+        })
       );
   }
 
   // Error handling
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(`${operation} failed: ${error.message}`);
+      this.logger.error(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
   }

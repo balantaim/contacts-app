@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 //Spinner
-import { NgxSpinnerService } from "ngx-spinner";
-import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+// import { NgxSpinnerService } from "ngx-spinner";
+// import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+// import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 
 @Component({
@@ -12,8 +13,11 @@ import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationErr
 export class AppComponent {
   title = 'ContactsApp';
 
-  //Create default loading animation between routes
-  constructor(private spinner: NgxSpinnerService, private router: Router) {
+  constructor() {
+
+    /*
+    //Create default loading animation between routes
+    
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.spinner.show(); // Show the spinner on navigation start
@@ -25,6 +29,8 @@ export class AppComponent {
         this.spinner.hide(); // Hide the spinner on navigation end or error
       }
     });
+    */
+
   }
 
   // ngOnInit(): void{

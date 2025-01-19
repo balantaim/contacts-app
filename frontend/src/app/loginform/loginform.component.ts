@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { NGXLogger } from "ngx-logger";
 //Spinner
 import { NgxSpinnerService } from "ngx-spinner";
+import { ToastrService } from 'ngx-toastr';
 //import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -36,6 +37,7 @@ export class LoginformComponent {
     private router: Router,
     private logger: NGXLogger,
     private spinner: NgxSpinnerService,
+    private toastr: ToastrService,
     //private cookieService: CookieService,
   ) {
     this.loginForm = this.fb.group({
@@ -62,8 +64,8 @@ export class LoginformComponent {
       };
 
       this.authService.tryLogin(body)
-        .subscribe((response) => {
-          if (response != null) {
+        .subscribe({
+          next: (response) => {
             if (response.status === 200 && response.url !== "http://localhost:5000/login/authFailed") {
               this.logger.info('Success login!');
               this.router.navigate(['contacts']);
@@ -71,26 +73,16 @@ export class LoginformComponent {
               this.logger.error('Error: Authorisation failed!');
               this.router.navigate(['authFailed']);
             }
+            //Hide loading spinner
+            this.spinner.hide();
+          },
+          error: (e) => {
+            this.logger.error('Error: ' + e);
+            this.spinner.hide();
+            this.toastr.error('Error: Web service is offline!');
           }
-          //Hide loading spinner
-          this.spinner.hide();
         });
     }
-
   }
-
-  // logout(): void {
-  //   //Delete session from the cookies
-  //   //this.deleteCookie('SESSION');
-  // }
-
-  // deleteCookie(cookieName: string) {
-  //   //Delete single cookie by name
-  //   if (this.cookieService.get(cookieName)) {
-  //     //Delete all cookies
-  //     //this.cookieService.deleteAll();
-  //     this.cookieService.delete(cookieName);
-  //   }
-  // }
 
 }

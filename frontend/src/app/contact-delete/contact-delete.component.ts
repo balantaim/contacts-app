@@ -58,13 +58,19 @@ export class ContactDeleteComponent implements OnInit {
     }
 
     this.contactService.deleteContact(this.idValue.value)
-      .subscribe((data) => {
-        if (data) {
-          this.logger.info('Success delete!');
-          this.toastr.success('Contact deleted!');
-        } else {
-          this.logger.error('Error: Contact not found!');
-          this.toastr.error('No contact with current ID!');
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            this.logger.info('Success delete!');
+            this.toastr.success('Contact deleted!');
+          } else {
+            this.logger.error('Error: Contact not found!');
+            this.toastr.error('No contact with current ID!');
+          }
+        },
+        error: (e) => {
+          this.logger.error('Error: ' + e);
+          this.toastr.error('The service is unavaiable!');
         }
       });
   }

@@ -39,7 +39,9 @@
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.css",
-              "node_modules/ngx-spinner/animations/ball-atom.css"
+              "node_modules/ngx-spinner/animations/ball-atom.css",
+              "node_modules/bulma/css/bulma.min.css",
+              "node_modules/material-icons/iconfont/material-icons.css"
             ],
             "scripts": []
           },
@@ -75,6 +77,11 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "headers": {
+              "Content-Security-Policy": "trusted-types angular; require-trusted-types-for 'script'; form-action 'self'; manifest-src 'self'; base-uri 'self'; child-src 'none'; frame-ancestors 'none'"
+            }
+          },
           "configurations": {
             "production": {
               "buildTarget": "contacts-app:build:production"

@@ -61,13 +61,25 @@ npm install --save ngx-logger
 
 npm install ngx-spinner --save
 
+### Install Bulma css framework (Optional)
+
+npm install bulma
+
 ### Add Angular material theme (Optional)
 
 ng add @angular/material
 
+### Add Angular material icons (Optional)
+
+npm install material-icons@latest
+
 ### Install cookies service (Optional)
 
 npm install ngx-cookie-service
+
+### Update the project to newer version (You could specify the version after @ or using 'latest')
+
+ng update @angular/core@18 @angular/cli@18
 
 ### Start the application
 

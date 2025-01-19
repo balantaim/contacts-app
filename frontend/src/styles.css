@@ -25,10 +25,12 @@ a {
 h1 {
     font-weight: bold;
 }
+main {
+    margin-top: 0;
+    min-height: calc(100vh - 316px);
+}
 .main {
     padding: 20px;
-    margin-top: auto;
-    min-height: calc(100vh - 340px);
 }
 .space {
     height: 40px;

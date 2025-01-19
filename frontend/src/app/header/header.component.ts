@@ -19,13 +19,18 @@ export class HeaderComponent {
 
   userExit(): void {
     this.authService.logout()
-      .subscribe((response) => {
-        console.log(response);
-        if (response.ok) {
-          this.authService.isLogged = false;
-          this.router.navigate(['']);
-        } else {
-          this.toastr.error('Someting goes wrong!');
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+          if (response.ok) {
+            this.authService.isLogged = false;
+            this.router.navigate(['']);
+          } else {
+            this.toastr.error('Someting goes wrong!');
+          }
+        },
+        error: (e) => {
+          this.toastr.error('The service is unavaiable!');
         }
       });
   }

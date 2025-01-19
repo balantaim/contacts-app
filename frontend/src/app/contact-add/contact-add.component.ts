@@ -63,13 +63,19 @@ export class ContactAddComponent implements OnInit {
 
     if (this.addForm.valid) {
       this.contactService.createContact(contact)
-        .subscribe(data => {
-          if (data) {
-            this.logger.info('Success create!');
-            this.toastr.success('Contact created!');
-          } else {
-            this.logger.info('Error: invalid input data!');
-            this.toastr.error('Invalid input data!');
+        .subscribe({
+          next: (data) => {
+            if (data) {
+              this.logger.info('Success create!');
+              this.toastr.success('Contact created!');
+            } else {
+              this.logger.error('Error: invalid input data!');
+              this.toastr.error('Invalid input data!');
+            }
+          },
+          error: (e) => {
+            this.logger.info('Error: ' + e);
+            this.toastr.error('The service is unavaiable! Please try again later');
           }
         });
     }

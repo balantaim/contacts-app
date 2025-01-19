@@ -45,8 +45,14 @@ export class ContactsComponent {
     }
 
     this.contactService.getContactById(this.idValue.value)
-      .subscribe((data) => {
-        this.contactById = data;
+      .subscribe({
+        next: (data) => {
+          this.contactById = data;
+        },
+        error: (e) => {
+          this.logger.error('Error: ' + e);
+          this.toastr.error('The service is unavaiable!');
+        }
       });
   }
 
@@ -59,11 +65,17 @@ export class ContactsComponent {
     }
 
     this.contactService.getContacts(filter)
-      .subscribe(data => {
-        this.contacts = data;
-        if (data.length == 0 && filter.length > 0) {
-          this.logger.info('No contacts.');
-          this.toastr.info('There are no contacts with this keyword.');
+      .subscribe({
+        next: data => {
+          this.contacts = data;
+          if (data.length == 0 && filter.length > 0) {
+            this.logger.info('No contacts.');
+            this.toastr.info('There are no contacts with this keyword.');
+          }
+        },
+        error: (e) => {
+          this.logger.error('Error: ' + e);
+          this.toastr.error('The service is unavaiable!');
         }
       });
   }

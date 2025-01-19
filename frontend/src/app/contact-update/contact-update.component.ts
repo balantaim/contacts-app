@@ -65,13 +65,19 @@ export class ContactUpdateComponent implements OnInit {
 
     if (this.updateForm.valid) {
       this.contactService.updateContact(contact)
-        .subscribe((data) => {
-          if (data) {
-            this.logger.info('Success update!');
-            this.toastr.success('Contact updated!');
-          } else {
-            this.logger.error('Error: Contact not found!');
-            this.toastr.error('Contact with current ID not found!');
+        .subscribe({
+          next: (data) => {
+            if (data) {
+              this.logger.info('Success update!');
+              this.toastr.success('Contact updated!');
+            } else {
+              this.logger.error('Error: Contact not found!');
+              this.toastr.error('Contact with current ID not found!');
+            }
+          },
+          error: (e) => {
+            this.logger.error('Error: ' + e);
+            this.toastr.error('The service is unavaiable!');
           }
         });
     }

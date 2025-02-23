@@ -1,12 +1,12 @@
 *{
-    color: #404654;
+    color: var(--accent-color);
 }
 .is-inline-block{
     transition: none;
 }
 .is-inline-block:hover{
-    background-color: #48c78e;
-    border: #48c78e 2px;
+    background-color: var(--primary-color);
+    border: var(--primary-color) 2px;
     border-radius: 24px;
     color: white;
 }

@@ -77,7 +77,7 @@ npm install material-icons@latest
 
 npm install ngx-cookie-service
 
-### Update the project to newer version (You could specify the version after @ or using 'latest')
+### Update the project to newer version (You could specify the version after @ or by using 'latest')
 
 ng update @angular/core@18 @angular/cli@18
 
@@ -138,6 +138,7 @@ docker-compose up --build
 ![Preview application](images/7.PNG)
 ![Preview application](images/8.PNG)
 ![Preview application](images/9.PNG)
+![Preview application](images/9-1.PNG)
 ![Preview application](images/10.PNG)
 ![Preview application](images/11.PNG)
 ![Preview application](images/12.PNG)

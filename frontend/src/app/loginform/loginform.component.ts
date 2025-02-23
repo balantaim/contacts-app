@@ -14,7 +14,6 @@ import { NGXLogger } from "ngx-logger";
 //Spinner
 import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from 'ngx-toastr';
-//import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-loginform',
@@ -38,7 +37,6 @@ export class LoginformComponent {
     private logger: NGXLogger,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
-    //private cookieService: CookieService,
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],

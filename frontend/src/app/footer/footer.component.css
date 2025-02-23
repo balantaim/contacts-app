@@ -1,4 +1,4 @@
 .footer{
-    background-color: #d9dbdb !important;
+    background-color: var(--accent-color) !important;
     padding-bottom: 28px;
 }

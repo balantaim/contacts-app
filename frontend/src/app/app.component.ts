@@ -13,9 +13,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'ContactsApp';
 
+  /*
   constructor() {
-
-    /*
     //Create default loading animation between routes
     
     this.router.events.subscribe(event => {
@@ -29,12 +28,7 @@ export class AppComponent {
         this.spinner.hide(); // Hide the spinner on navigation end or error
       }
     });
-    */
-
   }
-
-  // ngOnInit(): void{
-
-  // }
+  */
 
 }

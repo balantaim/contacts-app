@@ -23,7 +23,7 @@
       </mat-form-field>
     
       <div class="container get-by-id has-text-centered" appearance="outline">
-        <button type="button" class="button is-success is-rounded custom-button" (click)="findContactById()" clickable>Find Contact by ID</button>
+        <button type="button" class="button is-primary-button is-rounded custom-button" (click)="findContactById()" clickable>Find Contact by ID</button>
       </div>
     
       <div class="container">
@@ -52,7 +52,7 @@
       </mat-form-field>
     
       <div class="container get-all-filter has-text-centered">
-        <button #btnFilter type="button" class="button is-success is-rounded custom-button" (click)="getAllContacts()" clickable>Find All Contacts</button>
+        <button #btnFilter type="button" class="button is-primary-button is-rounded custom-button" (click)="getAllContacts()" clickable>Find All Contacts</button>
       </div>
     
       <div *ngIf="contacts.length > 0" class="container get-all">

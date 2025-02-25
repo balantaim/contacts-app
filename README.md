@@ -57,7 +57,7 @@ npm install --save ngx-logger
 ### Install loading spinner
 
 > [!WARNING]
-> Current supported version is Angular 17. Keep in mind that some features may not work!
+> Check if your Angular version is supported for ngx-spinner!
 
 npm install ngx-spinner --save
 

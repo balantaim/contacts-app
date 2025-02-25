@@ -3,8 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
+
   //Public routes
-  { path: '', loadComponent: () => import('./loginform/loginform.component').then((m) => m.LoginformComponent) }, //Login view + Lazy loading
+  //Login view + Lazy loading
+  { path: '', loadComponent: () => import('./loginform/loginform.component').then((m) => m.LoginformComponent), pathMatch: 'full' },
   //{ path: 'authFailed', component:AuthFailedComponent }, //Component without lazy loading
   { path: 'authFailed', loadComponent: () => import('./auth-failed/auth-failed.component').then((m) => m.AuthFailedComponent) },
   { path: 'page-not-found', loadComponent: () => import('./page-not-found/page-not-found.component').then((m) => m.PageNotFoundComponent) },
@@ -15,6 +17,7 @@ const routes: Routes = [
   { path: 'delete', loadComponent: () => import('./contact-delete/contact-delete.component').then((m) => m.ContactDeleteComponent), canActivate: [AuthGuard] },
   //Default route
   { path: '**', redirectTo: 'page-not-found' }
+  
 ];
 
 @NgModule({

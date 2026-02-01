@@ -2,7 +2,7 @@ import { NgxLoggerLevel } from "ngx-logger";
 
 export const environment = {
     production: true,
-    apiUrl: 'http://contacts-app.eu-north-1.elasticbeanstalk.com',
+    apiUrl: 'http://localhost:5000',
     logging: {
         level: NgxLoggerLevel.ERROR
     }

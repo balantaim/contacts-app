@@ -1,5 +1,5 @@
 # Dockerfile for b-end
-FROM openjdk:17-jdk
+FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 

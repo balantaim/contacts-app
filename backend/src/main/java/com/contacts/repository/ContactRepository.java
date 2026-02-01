@@ -1,4 +1,4 @@
-package com.contacts.dto;
+package com.contacts.repository;
 
 import com.contacts.entity.Contact;
 import io.micronaut.data.jdbc.annotation.JdbcRepository;
@@ -12,5 +12,7 @@ import java.util.Optional;
 public interface ContactRepository extends CrudRepository <Contact, Long> {
 
     Optional<Contact> findById(Long id);
+
+    Optional<Contact> findByEmail(String email);
 
 }

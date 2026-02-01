@@ -1,11 +1,14 @@
 plugins {
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.micronaut.application") version "4.4.0"
+    //Old plugin for shadow jar
+//    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("io.micronaut.application") version "4.6.1"
     id("io.micronaut.test-resources") version "4.4.0"
-    id("io.micronaut.aot") version "4.4.0"
+    id("io.micronaut.aot") version "4.6.1"
+    //New plugin for shadow jar
+    id("com.gradleup.shadow") version "8.3.9"
 }
 
-version = "1.0"
+version = "1.1"
 group = "com.contacts"
 
 repositories {
@@ -70,8 +73,8 @@ application {
     mainClass = "com.contacts.Application"
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
-    targetCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.toVersion("21")
+    targetCompatibility = JavaVersion.toVersion("21")
 }
 jar {
     manifest {
@@ -82,8 +85,8 @@ jar {
 //    }
 }
 
-
 graalvmNative.toolchainDetection = false
+
 micronaut {
     runtime("netty")
     testRuntime("junit5")
@@ -106,6 +109,10 @@ micronaut {
         optimizeNetty = true
         replaceLogbackXml = true
     }
+}
+
+tasks.named("dockerfileNative") {
+    jdkVersion = "21"
 }
 
 

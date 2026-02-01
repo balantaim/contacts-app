@@ -6,7 +6,7 @@
 
 ### Backend
 
-- Java 17, Micronaut, Gradle, Hibernate, Lombok, OpenAPI v3
+- Java 21+, Micronaut, Gradle, Hibernate, Lombok, OpenAPI v3
 
 ### Other software
 
@@ -166,7 +166,7 @@ cd ./backend
 
 ```bash
 cd ..
-docker-compose up --build
+docker compose up --build
 ```
 
 ## Contacts App Preview

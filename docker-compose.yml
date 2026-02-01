@@ -1,8 +1,7 @@
-version: '3'
-
 services:
   db:
     image: postgres:16
+    container_name: postgresql-contacts-app
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
@@ -29,9 +28,10 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/contacts-app
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=admin
+      - DATASOURCE_NAME=db
+      - DATASOURCE_PORT=5432
+      - DATASOURCE_USERNAME=postgres
+      - DATASOURCE_PASSWORD=admin
     depends_on:
       - db
 

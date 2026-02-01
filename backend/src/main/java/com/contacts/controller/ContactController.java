@@ -1,7 +1,7 @@
 package com.contacts.controller;
 
-import com.contacts.entity.Contact;
-import com.contacts.dto.ContactRepository;
+import com.contacts.dto.ContactDto;
+import com.contacts.service.ContactService;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
@@ -25,48 +25,46 @@ import java.util.stream.Collectors;
 @Secured(SecurityRule.IS_AUTHENTICATED)
 //Swagger Tag Name
 @Tag(name = "Contact Controller CRUD")
-@Controller("/")
+@Controller
 public class ContactController {
-
-    //Entry point for Swagger: http://localhost:5000/swagger-ui
 
     //Use jakarta @Inject for dependency injection (field should not be final)
     @Inject
-    private ContactRepository repository;
+    private ContactService contactService;
 
     //Get all Contacts and filter it by 'filter' if is given
     @Operation(summary = "Get all contacts", description = "Get all Contacts and filter it by 'filter' if is given")
     @ApiResponse(responseCode = "200", description = "OK")
     @ApiResponse(responseCode = "401", description = "Unauthorized")
 
-    @Get(uri="/")
-    public List<Contact> getAllContacts(@Nullable @QueryValue final String filter) {
-        List<Contact> data = null;
-        if(filter == null){
+    @Get
+    public HttpResponse<List<ContactDto>> getAllContacts(@Nullable @QueryValue final String filter) {
+        List<ContactDto> data;
+        if (filter == null) {
             //Get all contacts
-            data = repository.findAll();
-        }else{
+            data = contactService.getAllContacts();
+        } else {
             //Get all contacts and Search the date for keywords
-            data = repository.findAll()
+            data = contactService.getAllContacts()
                     .stream()
                     .filter(n ->
-                            n.getFirstName().toLowerCase().contains(filter.toLowerCase()) ||
-                                    n.getLastName().toLowerCase().contains(filter.toLowerCase()) ||
-                                    n.getPhoneNumber().toLowerCase().contains(filter.toLowerCase()) ||
-                                    n.getEmail().toLowerCase().contains(filter.toLowerCase()))
+                            n.firstName().toLowerCase().contains(filter.toLowerCase()) ||
+                                    n.lastName().toLowerCase().contains(filter.toLowerCase()) ||
+                                    n.phoneNumber().toLowerCase().contains(filter.toLowerCase()) ||
+                                    n.email().toLowerCase().contains(filter.toLowerCase()))
                     .collect(Collectors.toList());
         }
         //Get some information for debugging
         StringBuilder output = new StringBuilder();
-        if(data != null){
-            for(Contact c: data){
+        if (data != null) {
+            for (ContactDto c : data) {
                 output.append(c).append(";\n");
             }
-        }else{
+        } else {
             log.info("There are no contacts!");
         }
         log.info(output.toString());
-        return data;
+        return HttpResponse.ok(data);
     }
 
     //Find contact by ID
@@ -76,8 +74,8 @@ public class ContactController {
     @ApiResponse(responseCode = "404", description = "Contact not found")
 
     @Get("/find/{id}")
-    public HttpResponse<Contact> findById(@PathVariable final Long id) {
-        return repository.findById(id)
+    public HttpResponse<ContactDto> findById(@PathVariable final Long id) {
+        return contactService.getContactById(id)
                 .map(HttpResponse::ok)
                 .orElseGet(HttpResponse::notFound);
     }
@@ -88,95 +86,95 @@ public class ContactController {
     @ApiResponse(responseCode = "400", description = "Invalid Contact's data")
     @ApiResponse(responseCode = "401", description = "Unauthorized")
 
-    @Post(uri="/add")
-    public HttpResponse<Contact> addContact(@Body Contact contact) {
-        //Set ID to 0 to force creation of new Contact
-        contact.setId(0L);
-
+    @Post(uri = "/add")
+    public HttpResponse<ContactDto> addContact(@Body ContactDto contactDto) {
         //Validate record's data
-        boolean validity = validateContact(contact);
-        if(validity){
+        if (validateContact(contactDto)) {
             //Save the contact to the DB
-            repository.save(contact);
+            Optional<ContactDto> newContact = contactService.createContact(
+                    new ContactDto(0L,
+                            contactDto.firstName(),
+                            contactDto.lastName(),
+                            contactDto.phoneNumber(),
+                            contactDto.email()));
             log.info("New contact is created!");
 
-            return HttpResponse.created(contact);
+            if (newContact.isPresent()) {
+                return HttpResponse.created(newContact.get());
+            }
         }
         return HttpResponse.badRequest();
     }
 
     //Update existing Contact
     @Operation(summary = "Update contact", description = "Update contact's data")
-    @ApiResponse(content = @Content(mediaType = "text/plain", schema = @Schema(type="string")))
+    @ApiResponse(content = @Content(mediaType = "text/plain", schema = @Schema(type = "string")))
     @ApiResponse(responseCode = "200", description = "Update OK")
     @ApiResponse(responseCode = "400", description = "Invalid contact's data")
     @ApiResponse(responseCode = "401", description = "Unauthorized")
     @ApiResponse(responseCode = "404", description = "Contact not found")
 
-    @Put(uri="/update", produces="text/plain")
-    public HttpResponse updateContact(@Body final Contact contact){
+    @Put(uri = "/update", produces = "text/plain")
+    public HttpResponse<Void> updateContact(@Body final ContactDto contactDto) {
         //Check if contact exist in the DB
-        Optional<Contact> searchForContact = repository.findById(contact.getId());
-        if(searchForContact.isPresent()){
+        Optional<ContactDto> searchForContact = contactService.getContactById(contactDto.id());
+        if (searchForContact.isPresent()) {
             //Validate record's data
-            boolean validity = validateContact(contact);
-            if(validity){
+            if (validateContact(contactDto)) {
                 //Update the Contact
-                repository.update(contact);
+                contactService.updateContact(contactDto);
 
-                log.info("Contact updated: ID = " + contact.getId());
+                log.info("Contact updated: ID = {}", contactDto.id());
                 return HttpResponse.ok();
-            }else{
+            } else {
                 return HttpResponse.badRequest();
             }
             //return HttpResponse.noContent().header(HttpHeaders.LOCATION, "FAFA");
         }
-        return HttpResponse.notFound(contact.getId());
+        return HttpResponse.notFound();
     }
 
     //Delete existing Contact
-    //@Delete(uri="/delete/{id}", produces="text/plain")
     @Operation(summary = "Delete contact", description = "Delete a existing contact")
     @ApiResponse(responseCode = "200", description = "Contact deleted")
     @ApiResponse(responseCode = "401", description = "Unauthorized")
     @ApiResponse(responseCode = "404", description = "Contact not found")
 
-    @Delete(uri="/delete/{id}")
-    public HttpResponse deleteContact(final Long id){
+    @Delete(uri = "/delete/{id}")
+    public HttpResponse<Void> deleteContact(final Long id) {
         //Check if contact exist in the DB
-        Optional<Contact> searchForContact = repository.findById(id);
-        if(searchForContact.isPresent()){
+        Optional<ContactDto> searchForContact = contactService.getContactById(id);
+        if (searchForContact.isPresent()) {
             //Delete the Contact
-            repository.delete(searchForContact.get());
-
-            log.info("Contact deleted: ID = " + id);
+            contactService.deleteContact(searchForContact.get());
+            log.info("Contact deleted: ID = {}", id);
             return HttpResponse.ok();
         }
-        log.info("Contact not found: ID = " + id);
+        log.info("Contact not found: ID = {}", id);
         return HttpResponse.notFound();
     }
 
     //Validate user's data
-    private boolean validateContact(final Contact contact){
+    private boolean validateContact(ContactDto contactDto) {
         final String name = "^[0-9A-Za-z]{3,50}$",
                 phone = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$",
                 email = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,150})$";
 
-        Pattern pName, pPhone, pEmail = null;
-        Matcher mFirstName, mLastName, mPhone, mEmail = null;
+        Pattern pName, pPhone, pEmail;
+        Matcher mFirstName, mLastName, mPhone, mEmail;
         boolean result = false;
 
         pName = Pattern.compile(name, Pattern.CASE_INSENSITIVE);
-        mFirstName = pName.matcher(contact.getFirstName());
-        mLastName= pName.matcher(contact.getLastName());
+        mFirstName = pName.matcher(contactDto.firstName());
+        mLastName = pName.matcher(contactDto.lastName());
 
         pPhone = Pattern.compile(phone, Pattern.CASE_INSENSITIVE);
-        mPhone = pPhone.matcher(contact.getPhoneNumber());
+        mPhone = pPhone.matcher(contactDto.phoneNumber());
 
         pEmail = Pattern.compile(email, Pattern.CASE_INSENSITIVE);
-        mEmail = pEmail.matcher(contact.getEmail());
+        mEmail = pEmail.matcher(contactDto.email());
 
-        if(mFirstName.matches() && mLastName.matches() && mPhone.matches() && mEmail.matches()){
+        if (mFirstName.matches() && mLastName.matches() && mPhone.matches() && mEmail.matches()) {
             log.info("Validation OK!");
             result = true;
         }
